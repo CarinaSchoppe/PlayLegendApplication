@@ -2,3 +2,7 @@ name: PlayLegendBewerbung
 version: '1.0-SNAPSHOT'
 main: com.carinaschoppe.playLegendBewerbung.PlayLegendBewerbung
 api-version: '1.21'
+description: A Permissionsbased Plugin for an application for PlayLegend.net
+author: [ Carina Sophie Schoppe (LazarusDE) ]
+depend: [ ProtocolLib ]
+commands:

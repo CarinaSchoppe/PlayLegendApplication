@@ -1,5 +1,12 @@
 plugins {
     id 'java'
+    id 'idea'
+    id 'com.github.johnrengelman.shadow' version '+'
+    id 'xyz.jpenilla.run-paper' version '+'
+    id 'org.springframework.boot' version '+'
+    id 'io.spring.dependency-management' version '+'
+    id 'checkstyle'
+    id 'jacoco'
 }
 
 group = 'com.carinaschoppe'
@@ -11,6 +18,7 @@ repositories {
         name = "papermc-repo"
         url = "https://repo.papermc.io/repository/maven-public/"
     }
+    maven { url "https://repo.dmulloy2.net/repository/public/" }
     maven {
         name = "sonatype"
         url = "https://oss.sonatype.org/content/groups/public/"
@@ -18,7 +26,38 @@ repositories {
 }
 
 dependencies {
+
+    //spring
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+
+    //protocollib
+    compileOnly 'com.comphenix.protocol:ProtocolLib:+'
+
+
+    //junit
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:+'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:+'
+    //gson
+    implementation("com.google.code.gson:gson:+")
+
+    //lombok
+    compileOnly 'org.projectlombok:lombok:+'
+    annotationProcessor 'org.projectlombok:lombok:+'
+
+    testCompileOnly 'org.projectlombok:lombok:+'
+    testAnnotationProcessor 'org.projectlombok:lombok:+'
+
+
+    //mockito
+    testImplementation 'org.mockito:mockito-core:+'
+
+    //paper
     compileOnly("io.papermc.paper:paper-api:1.21.1-R0.1-SNAPSHOT")
+
+    //sqlite
+    implementation("org.xerial:sqlite-jdbc:+")
 }
 
 def targetJavaVersion = 21
@@ -46,4 +85,10 @@ processResources {
     filesMatching('plugin.yml') {
         expand props
     }
+}
+test {
+    useJUnitPlatform()
+}
+runServer {
+    minecraftVersion("1.21.1")
 }

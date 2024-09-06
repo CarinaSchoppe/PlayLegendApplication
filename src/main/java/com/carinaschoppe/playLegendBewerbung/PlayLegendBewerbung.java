@@ -4,6 +4,7 @@ import com.carinaschoppe.playLegendBewerbung.commands.PermissionsManagementComma
 import com.carinaschoppe.playLegendBewerbung.commands.PlayerRankManagementCommand;
 import com.carinaschoppe.playLegendBewerbung.commands.RankManagementCommand;
 import com.carinaschoppe.playLegendBewerbung.commands.TimeLeftCommand;
+import com.carinaschoppe.playLegendBewerbung.configuration.Configuration;
 import com.carinaschoppe.playLegendBewerbung.configuration.ConfigurationHandler;
 import com.carinaschoppe.playLegendBewerbung.database.DatabaseServices;
 import com.carinaschoppe.playLegendBewerbung.database.RankGeneration;
@@ -21,7 +22,7 @@ import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 
-
+@Getter
 public class PlayLegendBewerbung extends JavaPlugin {
 
 
@@ -31,13 +32,18 @@ public class PlayLegendBewerbung extends JavaPlugin {
   private final File pluginFolder = new File(Bukkit.getServer().getPluginsFolder(), "/PlayLegend");
 
 
+  private final File databaseFile = new File(pluginFolder, "database.db");
+
   @Override
   public void onEnable() {
     // Plugin startup logic
     instance = this;
     makePluginFolder();
-
     loadFiles();
+    if (Configuration.INSTANCE.getType().equalsIgnoreCase("sqlite")) {
+      makeDatabaseFile();
+    }
+
 
     DatabaseServices.createDatabase();
     DatabaseServices.loadPlayers();
@@ -45,6 +51,16 @@ public class PlayLegendBewerbung extends JavaPlugin {
     RankGeneration.loadDefaultRanks();
 
     initialize(Bukkit.getPluginManager());
+  }
+
+  private void makeDatabaseFile() {
+    if (!databaseFile.exists()) {
+      try {
+        databaseFile.createNewFile();
+      } catch (Exception e) {
+        e.printStackTrace();
+      }
+    }
   }
 
   private void loadFiles() {

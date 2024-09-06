@@ -15,6 +15,7 @@ public class Configuration {
   private String username = "root";
   private String password = "";
   private String database = "database";
+  private String type = "sqlite";
 
 
 

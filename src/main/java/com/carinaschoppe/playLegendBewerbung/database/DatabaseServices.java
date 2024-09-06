@@ -54,9 +54,19 @@ public class DatabaseServices {
           Configuration.INSTANCE.getUsername());  // Setze falls erforderlich
       dataSourceConfig.setPassword(
           Configuration.INSTANCE.getPassword());  // Setze falls erforderlich
-      dataSourceConfig.setUrl("jdbc:sqlite:");
-      // SQLite-Dateipfad
-      dataSourceConfig.setDriver("org.sqlite.JDBC");
+      if (Configuration.INSTANCE.getType().equalsIgnoreCase("sqlite")) {
+        dataSourceConfig.setUrl(
+            "jdbc:sqlite:" + PlayLegendBewerbung.getInstance().getDatabaseFile().getAbsolutePath());
+        // SQLite-Dateipfad
+        dataSourceConfig.setDriver("org.sqlite.JDBC");
+      } else if (Configuration.INSTANCE.getType().equalsIgnoreCase("mysql")) {
+        dataSourceConfig.setUrl("jdbc:mysql://" + Configuration.INSTANCE.getHost() + ":" +
+            Configuration.INSTANCE.getPort() + "/" + Configuration.INSTANCE.getDatabase());
+        // SQLite-Dateipfad
+        dataSourceConfig.setDriver("com.mysql.cj.jdbc.Driver");
+      }
+
+
       serverConfig.setDataSourceConfig(dataSourceConfig);
       // Initialisiere alle Klassen, die mit Ebean verbunden sind
       DatabasePlayer.init();  // Initialisiere die DatabasePlayer-Entität

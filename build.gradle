@@ -9,7 +9,7 @@ plugins {
 }
 
 group = 'com.carinaschoppe'
-version = '1.0-SNAPSHOT'
+version = '1.0'
 
 repositories {
     mavenCentral()
@@ -54,7 +54,6 @@ dependencies {
 
     //paper
     compileOnly("io.papermc.paper:paper-api:1.21.1-R0.1-SNAPSHOT")
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
 }
 
 def targetJavaVersion = 21
@@ -93,8 +92,27 @@ tasks {
     }
 
     build {
+        dependsOn jacocoTestReport
         dependsOn shadowJar
     }
+}
+
+jacocoTestReport {
+    reports {
+        xml.required = true
+    }
+}
+
+checkstyle {
+    toolVersion = '10.18.0' // Version von Checkstyle, die du verwenden möchtest
+    configFile = file('config/checkstyle/checkstyle.xml') // Dein eigenes Regelset
+}
+
+checkstyleMain {
+    source = 'src/main/java'
+}
+checkstyleTest {
+    source = 'src/test/java'
 }
 
 test {

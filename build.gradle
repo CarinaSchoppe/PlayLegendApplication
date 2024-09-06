@@ -1,12 +1,12 @@
 plugins {
     id 'java'
-    id 'idea'
-    id 'com.github.johnrengelman.shadow' version '+'
+    id 'com.github.johnrengelman.shadow' version '8.1.1'
     id 'xyz.jpenilla.run-paper' version '+'
-    id 'org.springframework.boot' version '+'
-    id 'io.spring.dependency-management' version '+'
     id 'checkstyle'
     id 'jacoco'
+    id 'idea'
+
+    id('io.ebean') version '12.3.6'
 }
 
 group = 'com.carinaschoppe'
@@ -27,28 +27,26 @@ repositories {
 
 dependencies {
 
-    //spring
-    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
-
+    implementation 'io.ebean:ebean:12.3.6'
+    implementation 'io.ebean:ebean-querybean:12.3.6'
+    annotationProcessor 'io.ebean:querybean-generator:12.3.6'
+    testImplementation 'io.ebean:ebean-test:12.3.6'
 
     //protocollib
     compileOnly 'com.comphenix.protocol:ProtocolLib:+'
 
-
     //junit
     testImplementation 'org.junit.jupiter:junit-jupiter-api:+'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:+'
+
     //gson
     implementation("com.google.code.gson:gson:+")
 
     //lombok
     compileOnly 'org.projectlombok:lombok:+'
     annotationProcessor 'org.projectlombok:lombok:+'
-
     testCompileOnly 'org.projectlombok:lombok:+'
     testAnnotationProcessor 'org.projectlombok:lombok:+'
-
 
     //mockito
     testImplementation 'org.mockito:mockito-core:+'
@@ -60,7 +58,7 @@ dependencies {
     implementation("org.xerial:sqlite-jdbc:+")
 }
 
-def targetJavaVersion = 21
+/*def targetJavaVersion = 21
 java {
     def javaVersion = JavaVersion.toVersion(targetJavaVersion)
     sourceCompatibility = javaVersion
@@ -85,10 +83,29 @@ processResources {
     filesMatching('plugin.yml') {
         expand props
     }
+}*/
+
+tasks {
+    shadowJar {
+        archiveClassifier.set('')  // Keine zusätzliche Bezeichnung, damit es die Haupt-JAR ist
+
+        // Sicherstellen, dass META-INF/services Dateien zusammengeführt werden
+        mergeServiceFiles {
+            include 'META-INF/services/*'
+        }
+    }
+
+    build {
+        dependsOn shadowJar
+    }
 }
+
+
 test {
     useJUnitPlatform()
 }
 runServer {
     minecraftVersion("1.21.1")
 }
+
+defaultTasks 'build'

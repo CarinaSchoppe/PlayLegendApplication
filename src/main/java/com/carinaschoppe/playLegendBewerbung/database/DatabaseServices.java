@@ -54,10 +54,9 @@ public class DatabaseServices {
           Configuration.INSTANCE.getUsername());  // Setze falls erforderlich
       dataSourceConfig.setPassword(
           Configuration.INSTANCE.getPassword());  // Setze falls erforderlich
-      dataSourceConfig.setUrl("jdbc:mysql://" + Configuration.INSTANCE.getHost() + ":" +
-          Configuration.INSTANCE.getPort() + "/" + Configuration.INSTANCE.getDatabase());
+      dataSourceConfig.setUrl("jdbc:sqlite:");
       // SQLite-Dateipfad
-      dataSourceConfig.setDriver("com.mysql.cj.jdbc.Driver");
+      dataSourceConfig.setDriver("org.sqlite.JDBC");
       serverConfig.setDataSourceConfig(dataSourceConfig);
       // Initialisiere alle Klassen, die mit Ebean verbunden sind
       DatabasePlayer.init();  // Initialisiere die DatabasePlayer-Entität

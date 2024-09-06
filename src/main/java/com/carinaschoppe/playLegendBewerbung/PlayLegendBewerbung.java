@@ -10,6 +10,7 @@ import com.carinaschoppe.playLegendBewerbung.database.RankGeneration;
 import com.carinaschoppe.playLegendBewerbung.events.PlayerChatEvent;
 import com.carinaschoppe.playLegendBewerbung.events.PlayerJoinsServerEvent;
 import com.carinaschoppe.playLegendBewerbung.events.PlayerLoginEvent;
+import com.carinaschoppe.playLegendBewerbung.events.PlayerReadSignEvent;
 import com.carinaschoppe.playLegendBewerbung.messages.MessageHandler;
 import com.carinaschoppe.playLegendBewerbung.ranklogic.RankHandler;
 import java.io.File;
@@ -36,7 +37,6 @@ public class PlayLegendBewerbung extends JavaPlugin {
     instance = this;
     makePluginFolder();
 
-
     loadFiles();
 
     DatabaseServices.createDatabase();
@@ -62,6 +62,7 @@ public class PlayLegendBewerbung extends JavaPlugin {
 
   private void initialize(@NotNull PluginManager pluginManager) {
 
+    new PlayerReadSignEvent(this);
 
     RankHandler.playerRankRemover();
     pluginManager.registerEvents(new PlayerJoinsServerEvent(), this);
@@ -74,6 +75,8 @@ public class PlayLegendBewerbung extends JavaPlugin {
         .setExecutor(new PlayerRankManagementCommand());
     Objects.requireNonNull(this.getCommand("permission"))
         .setExecutor(new PermissionsManagementCommand());
+
+
     getLogger().info("Plugin aktiviert und mit MySQL-Datenbank verbunden!");
   }
 

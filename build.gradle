@@ -56,6 +56,9 @@ dependencies {
     //paper
     paperweight.paperDevBundle("1.21.1-R0.1-SNAPSHOT")
 
+
+    //sqlite
+    implementation 'org.xerial:sqlite-jdbc:+'
 }
 
 def targetJavaVersion = 21

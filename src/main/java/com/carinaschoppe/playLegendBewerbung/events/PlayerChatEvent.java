@@ -20,9 +20,9 @@ public class PlayerChatEvent implements Listener {
       return;
     }
     var name = rank.getRankName();
-
     Bukkit.broadcast(
-        Messages.convertComponent(name + " " + player.getName() + ": " + event.message()));
+        Messages.convertComponent("[" + name + "]" + " " + player.getName() + ": ")
+            .append(event.message()));
 
 
   }

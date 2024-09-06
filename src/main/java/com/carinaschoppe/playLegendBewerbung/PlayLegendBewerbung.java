@@ -13,6 +13,7 @@ import com.carinaschoppe.playLegendBewerbung.events.PlayerLoginEvent;
 import com.carinaschoppe.playLegendBewerbung.messages.MessageHandler;
 import com.carinaschoppe.playLegendBewerbung.ranklogic.RankHandler;
 import java.io.File;
+import java.util.Objects;
 import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.PluginManager;
@@ -67,10 +68,12 @@ public class PlayLegendBewerbung extends JavaPlugin {
     pluginManager.registerEvents(new PlayerLoginEvent(), this);
     pluginManager.registerEvents(new PlayerChatEvent(), this);
 
-    this.getCommand("rank").setExecutor(new RankManagementCommand());
-    this.getCommand("time").setExecutor(new TimeLeftCommand());
-    this.getCommand("playergroup").setExecutor(new PlayerRankManagementCommand());
-    this.getCommand("permission").setExecutor(new PermissionsManagementCommand());
+    Objects.requireNonNull(this.getCommand("rank")).setExecutor(new RankManagementCommand());
+    Objects.requireNonNull(this.getCommand("time")).setExecutor(new TimeLeftCommand());
+    Objects.requireNonNull(this.getCommand("playergroup"))
+        .setExecutor(new PlayerRankManagementCommand());
+    Objects.requireNonNull(this.getCommand("permission"))
+        .setExecutor(new PermissionsManagementCommand());
     getLogger().info("Plugin aktiviert und mit MySQL-Datenbank verbunden!");
   }
 

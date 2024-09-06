@@ -14,6 +14,7 @@ import jakarta.persistence.Table;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.Getter;
+import org.bukkit.entity.Player;
 
 /**
  * Ein Datenbankeintrag, der einen Rang darstellt
@@ -35,6 +36,17 @@ public class DatabaseRank extends Model {
   private int level;
 
   public static void init() {
+  }
+
+  public static DatabaseRank getPlayerRank(Player player) {
+    var dbPlayer = DatabaseServices.DATABASE_PLAYERS.stream()
+        .filter(p -> p.getUuid().equals(player.getUniqueId())).findFirst().get();
+    if (dbPlayer == null) {
+      return null;
+    }
+
+    return dbPlayer.getDatabaseRank();
+
   }
 
   /**

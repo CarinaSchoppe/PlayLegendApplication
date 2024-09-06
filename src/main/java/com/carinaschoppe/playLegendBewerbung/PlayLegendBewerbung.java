@@ -7,6 +7,7 @@ import com.carinaschoppe.playLegendBewerbung.commands.TimeLeftCommand;
 import com.carinaschoppe.playLegendBewerbung.configuration.ConfigurationHandler;
 import com.carinaschoppe.playLegendBewerbung.database.DatabaseServices;
 import com.carinaschoppe.playLegendBewerbung.database.RankGeneration;
+import com.carinaschoppe.playLegendBewerbung.events.PlayerChatEvent;
 import com.carinaschoppe.playLegendBewerbung.events.PlayerJoinsServerEvent;
 import com.carinaschoppe.playLegendBewerbung.events.PlayerLoginEvent;
 import com.carinaschoppe.playLegendBewerbung.messages.MessageHandler;
@@ -64,6 +65,7 @@ public class PlayLegendBewerbung extends JavaPlugin {
     RankHandler.playerRankRemover();
     pluginManager.registerEvents(new PlayerJoinsServerEvent(), this);
     pluginManager.registerEvents(new PlayerLoginEvent(), this);
+    pluginManager.registerEvents(new PlayerChatEvent(), this);
 
     this.getCommand("rank").setExecutor(new RankManagementCommand());
     this.getCommand("time").setExecutor(new TimeLeftCommand());

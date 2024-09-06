@@ -1,18 +1,20 @@
 package com.carinaschoppe.playLegendBewerbung.database;
 
 
+import io.ebean.Model;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.*;
 import java.util.List;
 
 @Entity
 @Table(name = "rank")
 @Getter
 @Setter
-public class Rank {
-
+public class DatabaseRank extends Model {
+    public static void init() {
+    }
     @Id
     @Column(name = "rank_name", nullable = false, unique = true)
     private String rankName;

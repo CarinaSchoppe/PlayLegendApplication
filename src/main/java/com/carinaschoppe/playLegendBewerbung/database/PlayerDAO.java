@@ -1,6 +1,5 @@
 package com.carinaschoppe.playLegendBewerbung.database;
 
-import io.ebean.DB;
 import io.ebean.Database;
 import io.ebean.Query;
 import io.ebean.annotation.Transactional;
@@ -12,11 +11,12 @@ import java.util.UUID;
 
 @Singleton
 public class PlayerDAO {
-
+    public PlayerDAO(Database database) {
+        this.database = database;
+    }
     private final Database database;
 
-    public PlayerDAO() {
-        this.database = DB.getDefault();
+    public static void init() {
     }
 
     /**

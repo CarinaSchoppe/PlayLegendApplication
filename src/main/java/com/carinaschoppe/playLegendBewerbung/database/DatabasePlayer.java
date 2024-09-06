@@ -1,10 +1,10 @@
 package com.carinaschoppe.playLegendBewerbung.database;
 
 import io.ebean.Model;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -17,10 +17,12 @@ public class DatabasePlayer extends Model {
     @Column(name = "uuid", unique = true, nullable = false)
     private UUID uuid;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "rank_name")
-    private Rank rank;
+    private DatabaseRank databaseRank;
 
+    public static void init() {
+    }
     @Column(name = "rank_expiry")
     private LocalDateTime rankExpiry;
 

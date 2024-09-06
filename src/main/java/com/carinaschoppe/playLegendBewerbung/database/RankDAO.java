@@ -1,7 +1,6 @@
 package com.carinaschoppe.playLegendBewerbung.database;
 
 
-import io.ebean.DB;
 import io.ebean.Database;
 import io.ebean.annotation.Transactional;
 
@@ -15,19 +14,22 @@ public class RankDAO {
 
     private final Database database;
 
-    public RankDAO() {
-        this.database = DB.getDefault();
+    public RankDAO(Database database) {
+        this.database = database;
+    }
+
+    public static void init() {
     }
 
 
     /**
      * Speichert oder aktualisiert einen Rank in der Datenbank.
      *
-     * @param rank Das zu speichernde oder zu aktualisierende Rank-Objekt.
+     * @param databaseRank Das zu speichernde oder zu aktualisierende Rank-Objekt.
      */
     @Transactional
-    public void saveOrUpdateRank(Rank rank) {
-        database.save(rank);  // Rank speichern oder aktualisieren
+    public void saveOrUpdateRank(DatabaseRank databaseRank) {
+        database.save(databaseRank);  // Rank speichern oder aktualisieren
     }
 
     /**
@@ -37,8 +39,8 @@ public class RankDAO {
      * @return Der Rank mit dem angegebenen Namen oder null, falls nicht gefunden.
      */
     @Transactional
-    public Rank getRankByName(String rankName) {
-        return database.find(Rank.class).where().eq("name", rankName).findOne();
+    public DatabaseRank getRankByName(String rankName) {
+        return database.find(DatabaseRank.class).where().eq("name", rankName).findOne();
     }
 
     /**
@@ -47,36 +49,36 @@ public class RankDAO {
      * @return Eine Liste aller Ranks.
      */
     @Transactional
-    public List<Rank> getAllRanks() {
-        return database.find(Rank.class).findList();
+    public List<DatabaseRank> getAllRanks() {
+        return database.find(DatabaseRank.class).findList();
     }
 
     /**
      * Löscht einen Rank aus der Datenbank.
      *
-     * @param rank Das zu löschende Rank-Objekt.
+     * @param databaseRank Das zu löschende Rank-Objekt.
      */
     @Transactional
-    public void deleteRank(Rank rank) {
-        database.delete(rank);  // Rank löschen
+    public void deleteRank(DatabaseRank databaseRank) {
+        database.delete(databaseRank);  // Rank löschen
     }
 
 
     /**
      * Gibt alle Permissions des Ranks, sowie alle Permissions der untergeordneten Ranks zurück.
      *
-     * @param rank Der Rank, dessen Permissions abgefragt werden sollen.
+     * @param databaseRank Der Rank, dessen Permissions abgefragt werden sollen.
      * @return eine Liste aller Permissions des Ranks und der untergeordneten Ranks.
      */
-    public List<String> getAllPermissionsOfRankAndChildren(Rank rank) {
-        List<String> allPermissions = new ArrayList<>(rank.getPermissions());
+    public List<String> getAllPermissionsOfRankAndChildren(DatabaseRank databaseRank) {
+        List<String> allPermissions = new ArrayList<>(databaseRank.getPermissions());
 
-        for (Rank child : getAllRanks()) {
-            if (child.getLevel() < rank.getLevel()) {
+        for (DatabaseRank child : getAllRanks()) {
+            if (child.getLevel() < databaseRank.getLevel()) {
                 allPermissions.addAll(child.getPermissions());
             }
         }
-        allPermissions.addAll(rank.getPermissions());
+        allPermissions.addAll(databaseRank.getPermissions());
         return allPermissions;
     }
 }

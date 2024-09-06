@@ -5,8 +5,7 @@ plugins {
     id 'checkstyle'
     id 'jacoco'
     id 'idea'
-
-    id('io.ebean') version '12.3.6'
+    id('io.ebean') version '+'
 }
 
 group = 'com.carinaschoppe'
@@ -27,10 +26,12 @@ repositories {
 
 dependencies {
 
-    implementation 'io.ebean:ebean:12.3.6'
-    implementation 'io.ebean:ebean-querybean:12.3.6'
-    annotationProcessor 'io.ebean:querybean-generator:12.3.6'
-    testImplementation 'io.ebean:ebean-test:12.3.6'
+    //ORM Ebean
+    implementation 'io.ebean:ebean-ddl-generator:+'
+    implementation 'io.ebean:ebean:15.5.1'
+    implementation 'io.ebean:ebean-querybean:15.5.1'
+    annotationProcessor 'io.ebean:querybean-generator:15.5.1'
+    testImplementation 'io.ebean:ebean-test:15.5.1'
 
     //protocollib
     compileOnly 'com.comphenix.protocol:ProtocolLib:+'
@@ -53,16 +54,12 @@ dependencies {
 
     //paper
     compileOnly("io.papermc.paper:paper-api:1.21.1-R0.1-SNAPSHOT")
-
-    //sqlite
-    implementation("org.xerial:sqlite-jdbc:+")
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
 }
 
-/*def targetJavaVersion = 21
+def targetJavaVersion = 21
 java {
     def javaVersion = JavaVersion.toVersion(targetJavaVersion)
-    sourceCompatibility = javaVersion
-    targetCompatibility = javaVersion
     if (JavaVersion.current() < javaVersion) {
         toolchain.languageVersion = JavaLanguageVersion.of(targetJavaVersion)
     }
@@ -83,7 +80,7 @@ processResources {
     filesMatching('plugin.yml') {
         expand props
     }
-}*/
+}
 
 tasks {
     shadowJar {
@@ -100,7 +97,6 @@ tasks {
     }
 }
 
-
 test {
     useJUnitPlatform()
 }
@@ -109,3 +105,4 @@ runServer {
 }
 
 defaultTasks 'build'
+

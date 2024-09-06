@@ -3,6 +3,7 @@ package com.carinaschoppe.playLegendBewerbung.ranklogic;
 import com.carinaschoppe.playLegendBewerbung.PlayLegendBewerbung;
 import com.carinaschoppe.playLegendBewerbung.database.DatabaseServices;
 import com.carinaschoppe.playLegendBewerbung.messages.Messages;
+import com.carinaschoppe.playLegendBewerbung.utility.Utility;
 import java.lang.reflect.Field;
 import java.time.LocalDateTime;
 import org.bukkit.Bukkit;
@@ -46,7 +47,7 @@ public class RankHandler extends PermissibleBase {
 
           var player = Bukkit.getPlayer(dbPlayer.getUuid());
           if (player != null && player.isOnline()) {
-            player.sendMessage(Messages.convertComponent(
+            player.sendMessage(Utility.convertComponent(
                 Messages.INSTANCE.getNewRankReceived()
                     .replace("%rank%", dbPlayer.getDatabaseRank().getRankName())));
           }

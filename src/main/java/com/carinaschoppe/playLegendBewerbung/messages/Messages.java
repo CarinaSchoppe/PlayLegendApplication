@@ -2,8 +2,6 @@ package com.carinaschoppe.playLegendBewerbung.messages;
 
 import lombok.Getter;
 import lombok.Setter;
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.minimessage.MiniMessage;
 
 
 @Getter
@@ -26,12 +24,18 @@ public class Messages {
       "Dem Spieler %player% wurde der Rang %rank% verliehen.";
   private String removedPlayerFromRank =
       "Dem Spieler %player% wurde der Rang %rank% entzogen.";
+  private String permanentTime =
+      "Dein Rank %rank% ist permanent";
+  private String permanentTimeOther =
+      "Der Rank %rank% von %player% ist permanent";
   private String remainingTime =
-      "Es verbleiben noch %days% Tage, %hours% Stunden, %min% Minuten und %sec% Sekunden.";
+      "Es verbleiben noch %days% Tage, %hours% Stunden, %min% Minuten und %sec% für " +
+          "deinen Rank %rank% Sekunden.";
   private String remainingTimeOther =
-      "Es verbleiben noch %days% Tage, %hours% Stunden, %min% Minuten und %sec% Sekunden. für den" +
+      "Es verbleiben noch %days% Tage, %hours% Stunden, %min% Minuten und %sec% Sekunden im Rank " +
+          "%rank%" +
+          " für den" +
           " Spieler: %player%";
-
   private String prefixChanged =
       "Der Prefix vom Rang: %rank% ist nun: %prefix%";
   private String levelChanged =
@@ -42,10 +46,6 @@ public class Messages {
       "Herzlichen Glückwunsch zum neuen Rang %rank%!";
   private String noPlayer =
       "Du musst ein Spieler für diesen Befehl sein.";
-
-  public static Component convertComponent(String message) {
-    return MiniMessage.miniMessage().deserialize(message);
-  }
 
 
 }

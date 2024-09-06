@@ -1,7 +1,7 @@
 package com.carinaschoppe.playLegendBewerbung.events;
 
 import com.carinaschoppe.playLegendBewerbung.database.DatabaseRank;
-import com.carinaschoppe.playLegendBewerbung.messages.Messages;
+import com.carinaschoppe.playLegendBewerbung.utility.Utility;
 import io.papermc.paper.event.player.AsyncChatEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
@@ -21,7 +21,7 @@ public class PlayerChatEvent implements Listener {
     }
     var name = rank.getRankName();
     Bukkit.broadcast(
-        Messages.convertComponent("[" + name + "]" + " " + player.getName() + ": ")
+        Utility.convertComponent("[" + name + "]" + " " + player.getName() + ": ")
             .append(event.message()));
 
 

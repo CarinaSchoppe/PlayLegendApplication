@@ -4,6 +4,7 @@ import com.carinaschoppe.playLegendBewerbung.configuration.ConfigurationHandler;
 import com.carinaschoppe.playLegendBewerbung.database.DatabaseServices;
 import com.carinaschoppe.playLegendBewerbung.database.RankGeneration;
 import com.carinaschoppe.playLegendBewerbung.events.PlayerJoinsServerEvent;
+import com.carinaschoppe.playLegendBewerbung.events.PlayerLoginEvent;
 import com.carinaschoppe.playLegendBewerbung.messages.MessageHandler;
 import java.io.File;
 import lombok.Getter;
@@ -56,6 +57,7 @@ public class PlayLegendBewerbung extends JavaPlugin {
 
 
     pluginManager.registerEvents(new PlayerJoinsServerEvent(), this);
+    pluginManager.registerEvents(new PlayerLoginEvent(), this);
 
     getLogger().info("Plugin aktiviert und mit MySQL-Datenbank verbunden!");
   }

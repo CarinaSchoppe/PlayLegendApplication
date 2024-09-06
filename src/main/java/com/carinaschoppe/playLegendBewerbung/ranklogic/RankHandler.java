@@ -1,6 +1,8 @@
 package com.carinaschoppe.playLegendBewerbung.ranklogic;
 
 import com.carinaschoppe.playLegendBewerbung.database.DatabaseServices;
+import java.lang.reflect.Field;
+import org.bukkit.craftbukkit.entity.CraftHumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.permissions.PermissibleBase;
 import org.jetbrains.annotations.NotNull;
@@ -12,6 +14,17 @@ public class RankHandler extends PermissibleBase {
   public RankHandler(Player player) {
     super(player);
     this.player = player;
+  }
+
+  public static void updatePlayerPermissions(Player player) {
+    try {
+      Field field = CraftHumanEntity.class.getDeclaredField("perm");
+      field.setAccessible(true);
+      field.set(player, new RankHandler(player));
+      field.setAccessible(false);
+    } catch (NoSuchFieldException | IllegalAccessException e) {
+      throw new RuntimeException(e);
+    }
   }
 
   @Override

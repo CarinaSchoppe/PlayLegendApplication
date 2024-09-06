@@ -22,6 +22,7 @@ public class RankHandler extends PermissibleBase {
       field.setAccessible(true);
       field.set(player, new RankHandler(player));
       field.setAccessible(false);
+      player.updateCommands();
     } catch (NoSuchFieldException | IllegalAccessException e) {
       throw new RuntimeException(e);
     }

@@ -22,7 +22,6 @@ public class MessageHandler {
     if (!MESSAGES_FILE.exists()) {
       try {
         MESSAGES_FILE.createNewFile();
-        Messages.INSTANCE = new Messages();
         save();
       } catch (Exception e) {
         e.printStackTrace();
@@ -37,11 +36,16 @@ public class MessageHandler {
     //load the messages from to file
   }
 
-  private static void save() {
+  public static void save() {
+    if (Messages.INSTANCE == null) {
+      Messages.INSTANCE = new Messages();
+    }
     var gson = new GsonBuilder().setPrettyPrinting().create();
     try {
-      gson.toJson(Messages.INSTANCE, new FileWriter(MESSAGES_FILE));
-
+      var code = gson.toJson(Messages.INSTANCE);
+      var writer = new FileWriter(MESSAGES_FILE, false);
+      writer.write(code);
+      writer.flush();
     } catch (IOException e) {
       throw new RuntimeException(e);
     }

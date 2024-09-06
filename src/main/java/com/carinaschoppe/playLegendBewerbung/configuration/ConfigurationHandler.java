@@ -1,5 +1,6 @@
 package com.carinaschoppe.playLegendBewerbung.configuration;
 
+import com.carinaschoppe.playLegendBewerbung.PlayLegendBewerbung;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import java.io.File;
@@ -8,13 +9,12 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import lombok.Getter;
-import org.bukkit.Bukkit;
 
 @Getter
 public class ConfigurationHandler {
 
   private static final File CONFIG_FILE =
-      new File(Bukkit.getServer().getPluginsFolder(), "/PlayLegend/configuration.json");
+      new File(PlayLegendBewerbung.getInstance().getPluginFolder(), "configuration.json");
 
 
   public static void load() {
@@ -23,7 +23,6 @@ public class ConfigurationHandler {
     if (!CONFIG_FILE.exists()) {
       try {
         CONFIG_FILE.createNewFile();
-        Configuration.INSTANCE = new Configuration();
         save();
       } catch (Exception e) {
         e.printStackTrace();
@@ -38,11 +37,16 @@ public class ConfigurationHandler {
     //load the messages from to file
   }
 
-  private static void save() {
+  public static void save() {
+    if (Configuration.INSTANCE == null) {
+      Configuration.INSTANCE = new Configuration();
+    }
     var gson = new GsonBuilder().setPrettyPrinting().create();
     try {
-      gson.toJson(Configuration.INSTANCE, new FileWriter(CONFIG_FILE));
-
+      var code = gson.toJson(Configuration.INSTANCE);
+      var writer = new FileWriter(CONFIG_FILE, false);
+      writer.write(code);
+      writer.flush();
     } catch (IOException e) {
       throw new RuntimeException(e);
     }

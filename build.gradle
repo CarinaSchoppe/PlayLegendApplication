@@ -6,6 +6,7 @@ plugins {
     id 'jacoco'
     id 'idea'
     id('io.ebean') version '+'
+    id("io.papermc.paperweight.userdev") version "1.7.2"
 }
 
 group = 'com.carinaschoppe'
@@ -53,7 +54,8 @@ dependencies {
     testImplementation 'org.mockito:mockito-core:+'
 
     //paper
-    compileOnly("io.papermc.paper:paper-api:1.21.1-R0.1-SNAPSHOT")
+    paperweight.paperDevBundle("1.21.1-R0.1-SNAPSHOT")
+
 }
 
 def targetJavaVersion = 21

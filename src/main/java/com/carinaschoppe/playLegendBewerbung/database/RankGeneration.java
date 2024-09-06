@@ -11,8 +11,10 @@ public class RankGeneration {
 
     //generate default ranks
     var defaultRank =
-        new DatabaseRank().setRankName("default").setLevel(0).setPermissions(List.of(
-            "minecraft.help")).setPrefix("Nothing");
+        new DatabaseRank().setRankName("default").setLevel(0).setPermissions(
+            List.of(
+                "minecraft.help", "bukkit.broadcast", "bukkit.broadcast.user")
+        ).setPrefix("Nothing");
     defaultRank.save();
     DatabaseServices.DATABASE_RANK.add(defaultRank);
 

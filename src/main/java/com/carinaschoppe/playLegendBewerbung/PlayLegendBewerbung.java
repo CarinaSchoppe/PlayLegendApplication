@@ -40,8 +40,8 @@ public class PlayLegendBewerbung extends JavaPlugin {
   }
 
   private void loadFiles() {
-    ConfigurationHandler.load();
-    MessageHandler.load();
+    ConfigurationHandler.save();
+    MessageHandler.save();
 
   }
 

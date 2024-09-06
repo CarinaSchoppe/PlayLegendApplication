@@ -19,9 +19,9 @@ public class Messages {
       "Es konnte kein Spieler mit diesem Namen gefunden werden.";
   private String notEnoughArguments = "Es fehlen Argumente bei diesem Befehl.";
   private String lackOfPermission =
-      "Du hast nicht genug Rechte um diesen Befehl auszuf hren.";
+      "Du hast nicht genug Rechte um diesen Befehl auszufeuhren.";
   private String addedRank = "Der Rang %rank% wurde erstellt.";
-  private String removedRank = "Der Rang %rank% wurde gel scht.";
+  private String removedRank = "Der Rang %rank% wurde geloescht.";
   private String addedPlayerToRank =
       "Dem Spieler %player% wurde der Rang %rank% verliehen.";
   private String removedPlayerFromRank =
@@ -29,7 +29,7 @@ public class Messages {
   private String remainingTime =
       "Es verbleiben noch %days% Tage, %hours% Stunden, %min% Minuten und %sec% Sekunden.";
   private String addPermissionToRank =
-      "Die Permission %permission% wurde dem Rang %rank% hinzugefügt.";
+      "Die Permission %permission% wurde dem Rang %rank% hinzugefeugt.";
   private String newRankReceived =
       "Herzlichen Glückwunsch zum neuen Rang %rank%!";
   private String noPlayer =

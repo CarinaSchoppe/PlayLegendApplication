@@ -17,7 +17,9 @@ public class PlayerJoinsServerEvent implements Listener {
           .filter(p -> p.getUuid().equals(player.getUniqueId()))
           .findFirst()
           .orElse(new DatabasePlayer().setPermanent(true).setUuid(player.getUniqueId())
-              .setRankExpiry(null).setName(player.getName()));
+              .setRankExpiry(null).setName(player.getName()).setDatabaseRank(
+                  DatabaseServices.DATABASE_RANK.stream().filter(rank -> rank.getLevel() == 0)
+                      .findFirst().get()));
 
       databasePlayer.setName(player.getName());
       databasePlayer.save();

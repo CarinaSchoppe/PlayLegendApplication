@@ -6,3 +6,26 @@ description: A Permissionsbased Plugin for an application for PlayLegend.net
 author: [ Carina Sophie Schoppe (LazarusDE) ]
 depend: [ ProtocolLib ]
 commands:
+  rank:
+    description: 'Handled das Management von ranks'
+    aliases:
+      - rank
+      - ranks
+  playergroup:
+    description: 'Handled das Management von playergroups'
+    aliases:
+      - playergroup
+      - playergroups
+      - pg
+  permission:
+    description: 'Handled das Management von permissions'
+    aliases:
+      - permission
+      - permissions
+      - perm
+      - perms
+  time:
+    description: 'Tells the player the time he or others got on that rank'
+    aliases:
+      - time
+      - t

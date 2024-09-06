@@ -28,6 +28,14 @@ public class Messages {
       "Dem Spieler %player% wurde der Rang %rank% entzogen.";
   private String remainingTime =
       "Es verbleiben noch %days% Tage, %hours% Stunden, %min% Minuten und %sec% Sekunden.";
+  private String remainingTimeOther =
+      "Es verbleiben noch %days% Tage, %hours% Stunden, %min% Minuten und %sec% Sekunden. für den" +
+          " Spieler: %player%";
+
+  private String prefixChanged =
+      "Der Prefix vom Rang: %rank% ist nun: %prefix%";
+  private String levelChanged =
+      "Das Level vom Rang: %rank% ist nun: %level%";
   private String addPermissionToRank =
       "Die Permission %permission% wurde dem Rang %rank% hinzugefeugt.";
   private String newRankReceived =

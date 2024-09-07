@@ -19,7 +19,7 @@ public class PlayerChatEvent implements Listener {
     if (rank == null) {
       return;
     }
-    var name = rank.getRankName();
+    var name = rank.getPrefix();
     Bukkit.broadcast(
         Utility.convertComponent("[" + name + "]" + " " + player.getName() + ": ")
             .append(event.message()));

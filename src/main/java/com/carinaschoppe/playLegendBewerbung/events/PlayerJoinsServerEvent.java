@@ -12,7 +12,7 @@ public class PlayerJoinsServerEvent implements Listener {
   public void onPlayerJoin(PlayerJoinEvent event) {
     var player = event.getPlayer();
     var databaseRank = DatabaseRank.getPlayerRank(player);
-    var name = databaseRank.getRankName();
+    var name = databaseRank.getPrefix();
     event.joinMessage(Utility.convertComponent(
         "[" + name + "]" + " " + player.getName() + " hat das Spiel " + "betreten!"));
     //generate dao player

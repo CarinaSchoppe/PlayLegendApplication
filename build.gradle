@@ -35,7 +35,7 @@ dependencies {
     testImplementation 'io.ebean:ebean-test:15.5.1'
 
     //protocollib
-    compileOnly 'com.comphenix.protocol:ProtocolLib:+'
+    //compileOnly 'com.comphenix.protocol:ProtocolLib:+'
 
     //junit
     testImplementation 'org.junit.jupiter:junit-jupiter-api:+'

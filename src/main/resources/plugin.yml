@@ -4,7 +4,8 @@ main: com.carinaschoppe.playLegendBewerbung.PlayLegendBewerbung
 api-version: '1.21'
 description: A Permissionsbased Plugin for an application for PlayLegend.net
 author: [ Carina Sophie Schoppe (LazarusDE) ]
-depend: [ ProtocolLib ]
+# This sets PlaceholderAPI as a dependency for your plugin.
+depend: [ InSigns ]
 commands:
   rank:
     description: 'Handled das Management von ranks'

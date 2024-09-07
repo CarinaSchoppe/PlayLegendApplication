@@ -9,7 +9,6 @@ import com.carinaschoppe.playLegendBewerbung.configuration.ConfigurationHandler;
 import com.carinaschoppe.playLegendBewerbung.database.DatabaseServices;
 import com.carinaschoppe.playLegendBewerbung.database.RankGeneration;
 import com.carinaschoppe.playLegendBewerbung.events.PlayerChatEvent;
-import com.carinaschoppe.playLegendBewerbung.events.PlayerChunkLoadEvent;
 import com.carinaschoppe.playLegendBewerbung.events.PlayerJoinsServerEvent;
 import com.carinaschoppe.playLegendBewerbung.events.PlayerLoginEvent;
 import com.carinaschoppe.playLegendBewerbung.events.SignRelatedEvents;
@@ -19,6 +18,7 @@ import java.io.File;
 import java.util.Objects;
 import lombok.Getter;
 import org.bukkit.Bukkit;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
@@ -80,22 +80,27 @@ public class PlayLegendBewerbung extends JavaPlugin {
   private void initialize(@NotNull PluginManager pluginManager) {
 
 
-    RankHandler.playerRankRemover();
-    pluginManager.registerEvents(new PlayerJoinsServerEvent(), this);
-    pluginManager.registerEvents(new PlayerLoginEvent(), this);
-    pluginManager.registerEvents(new PlayerChatEvent(), this);
-    pluginManager.registerEvents(new PlayerChunkLoadEvent(), this);
-    pluginManager.registerEvents(new SignRelatedEvents(), this);
-
-    Objects.requireNonNull(this.getCommand("rank")).setExecutor(new RankManagementCommand());
-    Objects.requireNonNull(this.getCommand("time")).setExecutor(new TimeLeftCommand());
-    Objects.requireNonNull(this.getCommand("playergroup"))
-        .setExecutor(new PlayerRankManagementCommand());
-    Objects.requireNonNull(this.getCommand("permission"))
-        .setExecutor(new PermissionsManagementCommand());
+    Plugin insignsPlugin = getServer().getPluginManager().getPlugin("InSigns");
+    if ((insignsPlugin != null) && insignsPlugin.isEnabled()) {
+      // Replaces "[PLAYER]" with the player's name on signs and checks for the 'insigns.create.player' permission whenever a player tries to create a sign with "[PLAYER]" on it
 
 
-    getLogger().info("Plugin aktiviert und mit MySQL-Datenbank verbunden!");
+      RankHandler.playerRankRemover();
+      pluginManager.registerEvents(new PlayerJoinsServerEvent(), this);
+      pluginManager.registerEvents(new PlayerLoginEvent(), this);
+      pluginManager.registerEvents(new PlayerChatEvent(), this);
+      pluginManager.registerEvents(new SignRelatedEvents(), this);
+
+      Objects.requireNonNull(this.getCommand("rank")).setExecutor(new RankManagementCommand());
+      Objects.requireNonNull(this.getCommand("time")).setExecutor(new TimeLeftCommand());
+      Objects.requireNonNull(this.getCommand("playergroup"))
+          .setExecutor(new PlayerRankManagementCommand());
+      Objects.requireNonNull(this.getCommand("permission"))
+          .setExecutor(new PermissionsManagementCommand());
+
+
+      getLogger().info("Plugin aktiviert und mit MySQL-Datenbank verbunden!");
+    }
   }
 
 

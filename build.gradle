@@ -13,6 +13,12 @@ group = 'com.carinaschoppe'
 version = '1.0'
 
 repositories {
+
+    maven {
+        url = 'https://repo.extendedclip.com/content/repositories/placeholderapi/'
+    }
+
+
     mavenCentral()
     maven {
         name = "papermc-repo"
@@ -23,10 +29,17 @@ repositories {
         name = "sonatype"
         url = "https://oss.sonatype.org/content/groups/public/"
     }
+
+    flatDir {
+        dirs 'dependentPlugins' // Verzeichnispfad anpassen
+    }
 }
 
 dependencies {
 
+    //placehodler API
+    //compileOnly 'com.comphenix.protocol:ProtocolLib:5.1.0'
+    compileOnly name: 'individualsigns'
     //ORM Ebean
     implementation 'io.ebean:ebean-ddl-generator:+'
     implementation 'io.ebean:ebean:15.5.1'

@@ -45,9 +45,7 @@ public class DatabaseServices {
       serverConfig.loadFromProperties();  // Lädt Konfiguration aus application.yaml oder ebean.properties
       serverConfig.setDdlGenerate(true);  // Generiert die Tabellen-SQL-Anweisungen
       serverConfig.setDdlRun(true);       // Führe die DDL aus, um die Tabellen zu erstellen
-      serverConfig.setDefaultServer(true);
-      serverConfig.setRegister(true);
-
+      serverConfig.setDdlCreateOnly(true);
       // Setze die Datenbankverbindung
       DataSourceConfig dataSourceConfig = new DataSourceConfig();
       dataSourceConfig.setUsername(

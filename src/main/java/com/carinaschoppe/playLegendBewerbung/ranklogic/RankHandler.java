@@ -39,12 +39,13 @@ public class RankHandler extends PermissibleBase {
       //go through all players in the database and check if they have expired then set them to
       // default group
       for (var dbPlayer : DatabaseServices.DATABASE_PLAYERS) {
-        if (dbPlayer.getRankExpiry() != null &&
+        if (dbPlayer.getRankExpiry() != null && !dbPlayer.isPermanent() &&
             dbPlayer.getRankExpiry().isBefore(LocalDateTime.now())) {
           dbPlayer.setRankExpiry(null).setDatabaseRank(
               DatabaseServices.DATABASE_RANK.stream().filter(rank -> rank.getLevel() == 0)
-                  .findFirst().get()).save();
-
+                  .findFirst().get());
+          dbPlayer.setPermanent(true);
+          dbPlayer.save();
           var player = Bukkit.getPlayer(dbPlayer.getUuid());
           if (player != null && player.isOnline()) {
             player.sendMessage(Utility.convertComponent(

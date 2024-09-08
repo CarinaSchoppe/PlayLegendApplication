@@ -25,6 +25,11 @@ public class TimeLeftCommand implements CommandExecutor {
       return false;
     }
 
+    if (!player.hasPermission("playlegendbewerbung.time")) {
+      player.sendMessage(Utility.convertComponent(Messages.INSTANCE.getNoPermissions()));
+      return false;
+    }
+
     if (args.length == 0) {
       //get own time left
       //time left
@@ -48,7 +53,7 @@ public class TimeLeftCommand implements CommandExecutor {
       var dbPlayerSearch = other.get();
       otherPlayerMesssage(dbPlayerSearch, player);
     } else {
-      sender.sendMessage(Utility.convertComponent(Messages.INSTANCE.getNotEnoughArguments()));
+      sender.sendMessage(Utility.convertComponent(Messages.INSTANCE.getArgumentsNotCorrect()));
     }
     return false;
   }

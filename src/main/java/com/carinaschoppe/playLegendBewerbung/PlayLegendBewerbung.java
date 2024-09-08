@@ -5,15 +5,14 @@ import com.carinaschoppe.playLegendBewerbung.commands.PlayerRankManagementComman
 import com.carinaschoppe.playLegendBewerbung.commands.RankManagementCommand;
 import com.carinaschoppe.playLegendBewerbung.commands.TimeLeftCommand;
 import com.carinaschoppe.playLegendBewerbung.configuration.Configuration;
-import com.carinaschoppe.playLegendBewerbung.configuration.ConfigurationHandler;
 import com.carinaschoppe.playLegendBewerbung.database.DatabaseServices;
 import com.carinaschoppe.playLegendBewerbung.database.DefaultRankGeneration;
 import com.carinaschoppe.playLegendBewerbung.events.PlayerChatEvent;
 import com.carinaschoppe.playLegendBewerbung.events.PlayerJoinsServerEvent;
 import com.carinaschoppe.playLegendBewerbung.events.PlayerLoginEvent;
 import com.carinaschoppe.playLegendBewerbung.events.SignRelatedEvents;
-import com.carinaschoppe.playLegendBewerbung.messages.MessageHandler;
 import com.carinaschoppe.playLegendBewerbung.ranklogic.RankHandler;
+import com.carinaschoppe.playLegendBewerbung.utility.FileHandler;
 import java.io.File;
 import java.util.Objects;
 import lombok.Getter;
@@ -29,23 +28,21 @@ public class PlayLegendBewerbung extends JavaPlugin {
 
   @Getter
   private static PlayLegendBewerbung instance;
-  @Getter
-  private final File pluginFolder = new File(Bukkit.getServer().getPluginsFolder(), "/PlayLegend");
 
-
-  private final File databaseFile = new File(pluginFolder, "database.db");
 
   @Override
   public void onEnable() {
     // Plugin startup logic
     instance = this;
-    makePluginFolder();
-    loadFiles();
+    var pluginsFolder = new File(Bukkit.getServer().getPluginsFolder(), "/PlayLegend");
+    var databaseFile = new File(pluginsFolder, "database.db");
+    FileHandler.makePluginFolder(pluginsFolder);
+    FileHandler.loadFiles(pluginsFolder);
     if (Configuration.INSTANCE.getType().equalsIgnoreCase("sqlite")) {
-      makeDatabaseFile();
+      FileHandler.makeDatabaseFile(databaseFile);
     }
 
-    DatabaseServices.createDatabase();
+    DatabaseServices.createDatabase(databaseFile);
 
     DatabaseServices.loadPlayers();
     DatabaseServices.loadRanks();
@@ -54,27 +51,9 @@ public class PlayLegendBewerbung extends JavaPlugin {
     initialize(Bukkit.getPluginManager());
   }
 
-  private void makeDatabaseFile() {
-    if (!databaseFile.exists()) {
-      try {
-        databaseFile.createNewFile();
-      } catch (Exception e) {
-        e.printStackTrace();
-      }
-    }
-  }
-
-  private void loadFiles() {
-    ConfigurationHandler.load();
-    MessageHandler.load();
-  }
 
 
-  private void makePluginFolder() {
-    if (!pluginFolder.exists()) {
-      pluginFolder.mkdirs();
-    }
-  }
+
 
   private void initialize(@NotNull PluginManager pluginManager) {
 

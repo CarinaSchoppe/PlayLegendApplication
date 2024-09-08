@@ -1,6 +1,5 @@
 package com.carinaschoppe.playLegendBewerbung.messages;
 
-import com.carinaschoppe.playLegendBewerbung.PlayLegendBewerbung;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import java.io.File;
@@ -12,15 +11,16 @@ import java.io.IOException;
 public class MessageHandler {
 
 
-  public static final File MESSAGES_FILE =
-      new File(PlayLegendBewerbung.getInstance().getPluginFolder(), "messages.json");
+  public static File MESSAGES_FILE;
 
 
-  public static void load() {
+  public static void load(File pluginsFolder) {
     var gson = new Gson();
+    MESSAGES_FILE = new File(pluginsFolder, "messages.json");
     //convert the Messages class to json
     if (!MESSAGES_FILE.exists()) {
       try {
+        pluginsFolder.mkdirs();
         MESSAGES_FILE.createNewFile();
         save();
       } catch (Exception e) {
@@ -37,7 +37,7 @@ public class MessageHandler {
     //load the messages from to file
   }
 
-  public static void save() {
+  private static void save() {
     if (Messages.INSTANCE == null) {
       Messages.INSTANCE = new Messages();
     }

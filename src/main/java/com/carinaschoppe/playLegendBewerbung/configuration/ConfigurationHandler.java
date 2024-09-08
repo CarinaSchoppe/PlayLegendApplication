@@ -1,6 +1,5 @@
 package com.carinaschoppe.playLegendBewerbung.configuration;
 
-import com.carinaschoppe.playLegendBewerbung.PlayLegendBewerbung;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import java.io.File;
@@ -13,15 +12,16 @@ import lombok.Getter;
 @Getter
 public class ConfigurationHandler {
 
-  private static final File CONFIG_FILE =
-      new File(PlayLegendBewerbung.getInstance().getPluginFolder(), "configuration.json");
+  private static File CONFIG_FILE;
 
 
-  public static void load() {
+  public static void load(File pluginsFolder) {
+    CONFIG_FILE = new File(pluginsFolder, "configuration.json");
     var gson = new Gson();
     //convert the Messages class to json
     if (!CONFIG_FILE.exists()) {
       try {
+        pluginsFolder.mkdirs();
         CONFIG_FILE.createNewFile();
         save();
       } catch (Exception e) {
@@ -38,7 +38,7 @@ public class ConfigurationHandler {
     //load the messages from to file
   }
 
-  public static void save() {
+  private static void save() {
     if (Configuration.INSTANCE == null) {
       Configuration.INSTANCE = new Configuration();
     }

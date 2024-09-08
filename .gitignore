@@ -9,7 +9,7 @@ run/
 out/
 # mpeltonen/sbt-idea plugin
 .idea_modules/
-
+*.json
 # JIRA plugin
 atlassian-ide-plugin.xml
 gradle.properties
@@ -19,9 +19,9 @@ gradle.properties
 # Log file
 *.log
 
+logs
 # BlueJ files
 *.ctxt
-
 # Package Files #
 *.jar
 *.war

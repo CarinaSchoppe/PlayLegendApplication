@@ -5,16 +5,19 @@ import com.carinaschoppe.playLegendBewerbung.configuration.Configuration;
 import io.ebean.Database;
 import io.ebean.DatabaseFactory;
 import io.ebean.datasource.DataSourceConfig;
+import java.io.File;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import lombok.Getter;
+import lombok.Setter;
 
 public class DatabaseServices {
 
   public static final Set<DatabasePlayer> DATABASE_PLAYERS = new HashSet<>();
   public static final Set<DatabaseRank> DATABASE_RANK = new HashSet<>();
   @Getter
+  @Setter
   private static Database database;
 
   public static void loadRanks() {
@@ -29,7 +32,7 @@ public class DatabaseServices {
     DATABASE_PLAYERS.addAll(databasePlayers);
   }
 
-  public static Database createDatabase() {
+  public static Database createDatabase(File databaseFile) {
 
     // Speichern des ursprünglichen ClassLoaders
     ClassLoader originalClassLoader = Thread.currentThread().getContextClassLoader();
@@ -51,7 +54,7 @@ public class DatabaseServices {
           Configuration.INSTANCE.getPassword());  // Setze falls erforderlich
       if (Configuration.INSTANCE.getType().equalsIgnoreCase("sqlite")) {
         dataSourceConfig.setUrl(
-            "jdbc:sqlite:" + PlayLegendBewerbung.getInstance().getDatabaseFile().getAbsolutePath());
+            "jdbc:sqlite:" + databaseFile.getAbsolutePath());
         // SQLite-Dateipfad
         dataSourceConfig.setDriver("org.sqlite.JDBC");
       } else if (Configuration.INSTANCE.getType().equalsIgnoreCase("mysql")) {
@@ -73,10 +76,10 @@ public class DatabaseServices {
       database = DatabaseFactory.create(serverConfig);
 
       // Logge die erfolgreiche Erstellung der Datenbank
-      PlayLegendBewerbung.getInstance().getLogger().info("Successfully created database");
+      if (PlayLegendBewerbung.getInstance() != null) {
+        PlayLegendBewerbung.getInstance().getLogger().info("Successfully created database");
+      }
     } catch (Exception e) {
-      PlayLegendBewerbung.getInstance().getLogger()
-          .severe("Error creating database: " + e.getMessage());
       e.printStackTrace();
     } finally {
       // Setze den originalen ClassLoader zurück, nachdem die Datenbank initialisiert wurde

@@ -4,6 +4,7 @@ import com.carinaschoppe.playLegendBewerbung.database.DatabasePlayer;
 import com.carinaschoppe.playLegendBewerbung.database.DatabaseRank;
 import com.carinaschoppe.playLegendBewerbung.database.DatabaseServices;
 import com.carinaschoppe.playLegendBewerbung.messages.Messages;
+import com.carinaschoppe.playLegendBewerbung.ranklogic.RankHandler;
 import com.carinaschoppe.playLegendBewerbung.utility.Utility;
 import java.time.LocalDateTime;
 import org.bukkit.Bukkit;
@@ -15,9 +16,11 @@ import org.jetbrains.annotations.NotNull;
 
 public class PlayerRankManagementCommand implements CommandExecutor {
 
-  private static void sendMessages(Player player, DatabaseRank dbRank, DatabasePlayer dbPlayer) {
+  private static void sendMessagesAndUpdateCommands(Player player, DatabaseRank dbRank,
+                                                    DatabasePlayer dbPlayer) {
     var onlinePlayer = Bukkit.getPlayer(player.getUniqueId());
 
+    RankHandler.updatePlayerPermissions(onlinePlayer);
     if (onlinePlayer != null) {
       onlinePlayer.sendMessage(Utility.convertComponent(
           Messages.INSTANCE.getNewRankReceived().replace("%rank%", dbRank.getRankName())));
@@ -111,7 +114,8 @@ public class PlayerRankManagementCommand implements CommandExecutor {
     dbPlayer.setPermanent(false);
     dbPlayer.save();
 
-    sendMessages(player, dbRank, dbPlayer);
+
+    sendMessagesAndUpdateCommands(player, dbRank, dbPlayer);
 
 
   }
@@ -144,7 +148,7 @@ public class PlayerRankManagementCommand implements CommandExecutor {
     dbPlayer.setPermanent(true);
     dbPlayer.save();
 
-    sendMessages(player, dbRank, dbPlayer);
+    sendMessagesAndUpdateCommands(player, dbRank, dbPlayer);
 
 
   }

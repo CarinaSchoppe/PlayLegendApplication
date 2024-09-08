@@ -23,6 +23,7 @@ public class RankHandler extends PermissibleBase {
 
   public static void updatePlayerPermissions(Player player) {
     try {
+      player.hasPermission("");
       Field field = CraftHumanEntity.class.getDeclaredField("perm");
       field.setAccessible(true);
       field.set(player, new RankHandler(player));
@@ -69,7 +70,6 @@ public class RankHandler extends PermissibleBase {
     if (permissions.contains("-" + inName)) {
       return false;
     }
-
     if (permissions.contains("*") || player.isOp()) {
       return true;
     }

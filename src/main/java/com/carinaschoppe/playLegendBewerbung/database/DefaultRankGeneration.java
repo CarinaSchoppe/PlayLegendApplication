@@ -2,7 +2,7 @@ package com.carinaschoppe.playLegendBewerbung.database;
 
 import java.util.List;
 
-public class RankGeneration {
+public class DefaultRankGeneration {
 
   public static void loadDefaultRanks() {
     if (!DatabaseServices.DATABASE_RANK.isEmpty()) {
@@ -14,7 +14,7 @@ public class RankGeneration {
         new DatabaseRank().setRankName("default").setLevel(0).setPermissions(
             List.of(
                 "minecraft.help", "bukkit.broadcast", "bukkit.broadcast.user", "minecraft.command" +
-                    ".gamemode", "*")
+                    ".gamemode")
         ).setPrefix("Nothing");
     defaultRank.save();
     DatabaseServices.DATABASE_RANK.add(defaultRank);

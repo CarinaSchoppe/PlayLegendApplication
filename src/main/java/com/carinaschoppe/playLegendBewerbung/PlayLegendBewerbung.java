@@ -7,7 +7,7 @@ import com.carinaschoppe.playLegendBewerbung.commands.TimeLeftCommand;
 import com.carinaschoppe.playLegendBewerbung.configuration.Configuration;
 import com.carinaschoppe.playLegendBewerbung.configuration.ConfigurationHandler;
 import com.carinaschoppe.playLegendBewerbung.database.DatabaseServices;
-import com.carinaschoppe.playLegendBewerbung.database.RankGeneration;
+import com.carinaschoppe.playLegendBewerbung.database.DefaultRankGeneration;
 import com.carinaschoppe.playLegendBewerbung.events.PlayerChatEvent;
 import com.carinaschoppe.playLegendBewerbung.events.PlayerJoinsServerEvent;
 import com.carinaschoppe.playLegendBewerbung.events.PlayerLoginEvent;
@@ -49,7 +49,7 @@ public class PlayLegendBewerbung extends JavaPlugin {
 
     DatabaseServices.loadPlayers();
     DatabaseServices.loadRanks();
-    RankGeneration.loadDefaultRanks();
+    DefaultRankGeneration.loadDefaultRanks();
 
     initialize(Bukkit.getPluginManager());
   }

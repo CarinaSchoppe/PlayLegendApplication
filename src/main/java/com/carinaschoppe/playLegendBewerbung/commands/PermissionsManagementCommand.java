@@ -52,7 +52,8 @@ public class PermissionsManagementCommand implements CommandExecutor {
     var dbSearch = DatabaseServices.DATABASE_RANK.stream()
         .filter(it -> it.getRankName().equalsIgnoreCase(rankname)).findFirst();
     if (dbSearch.isEmpty()) {
-      player.sendMessage(Utility.convertComponent(Messages.INSTANCE.getRankNotExist()));
+      player.sendMessage(Utility.convertComponent(Messages.INSTANCE.getRankNotExist().replace(
+          "%rank%", rankname)));
       return;
     }
 
@@ -72,19 +73,20 @@ public class PermissionsManagementCommand implements CommandExecutor {
     var dbSearch = DatabaseServices.DATABASE_RANK.stream()
         .filter(it -> it.getRankName().equalsIgnoreCase(rankname)).findFirst();
     if (dbSearch.isEmpty()) {
-      player.sendMessage(Utility.convertComponent(Messages.INSTANCE.getRankNotExist()));
+      player.sendMessage(Utility.convertComponent(Messages.INSTANCE.getRankNotExist().replace(
+          "%rank%", rankname)));
       return;
     }
 
     var dbRank = dbSearch.get();
-
-    if (dbRank.getPermissions().stream().anyMatch(it -> it.equalsIgnoreCase(permissionToAdd))) {
+    var permissions = new ArrayList<>(dbRank.getPermissions());
+    if (permissions.contains(permissionToAdd)) {
       player.sendMessage(
           Utility.convertComponent(Messages.INSTANCE.getPermissionAlreadyExists().replace(
               "%permission%", permissionToAdd).replace("%rank%", dbRank.getRankName())));
+      return;
     }
 
-    var permissions = new ArrayList<>(dbRank.getPermissions());
     permissions.add(permissionToAdd);
     dbRank.setPermissions(permissions);
     dbRank.save();

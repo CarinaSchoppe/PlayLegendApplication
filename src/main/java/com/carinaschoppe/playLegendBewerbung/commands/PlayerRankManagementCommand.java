@@ -101,6 +101,10 @@ public class PlayerRankManagementCommand implements CommandExecutor {
     var dbPlayer = dbPlayerSearch.get();
     var dbRank = dbRankSearch.get();
 
+    if (dbRank.getRankName().equalsIgnoreCase("default")) {
+      player.sendMessage(Utility.convertComponent(Messages.INSTANCE.getArgumentsNotCorrect()));
+      return;
+    }
 
     dbPlayer.setDatabaseRank(dbRank);
     dbPlayer.setRankExpiry(dateTime);

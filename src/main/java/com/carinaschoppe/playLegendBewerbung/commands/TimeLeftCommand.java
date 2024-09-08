@@ -5,6 +5,7 @@ import com.carinaschoppe.playLegendBewerbung.database.DatabaseRank;
 import com.carinaschoppe.playLegendBewerbung.database.DatabaseServices;
 import com.carinaschoppe.playLegendBewerbung.messages.Messages;
 import com.carinaschoppe.playLegendBewerbung.utility.Utility;
+import java.time.Duration;
 import java.time.LocalDateTime;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -87,20 +88,26 @@ public class TimeLeftCommand implements CommandExecutor {
 
 
   private String calculateTimeLeft(DatabasePlayer dbPlayer) {
-    LocalDateTime time = dbPlayer.getRankExpiry();
+    LocalDateTime expiryTime = dbPlayer.getRankExpiry();
+    LocalDateTime now = LocalDateTime.now();
 
-    //get the time left in days hours min seconds based on the current localdatetime
+    // Berechne die Dauer zwischen jetzt und dem Ablaufzeitpunkt
+    Duration duration = Duration.between(now, expiryTime);
 
-    var localDateTime = LocalDateTime.now();
+    // Extrahiere die verbleibenden Tage, Stunden, Minuten und Sekunden
+    long days = duration.toDays();
+    duration = duration.minusDays(days);
 
-    var days = localDateTime.getDayOfYear() - time.getDayOfYear();
-    var hours = localDateTime.getHour() - time.getHour();
-    var minutes = localDateTime.getMinute() - time.getMinute();
-    var seconds = localDateTime.getSecond() - time.getSecond();
+    long hours = duration.toHours();
+    duration = duration.minusHours(hours);
 
-    //Create a string with date and hour and min and seconds left
+    long minutes = duration.toMinutes();
+    duration = duration.minusMinutes(minutes);
 
-    var timeLeft = days + "d " + hours + "h " + minutes + "m " + seconds + "s";
+    long seconds = duration.getSeconds();
+
+    // Erstelle einen String mit der verbleibenden Zeit
+    String timeLeft = days + "d " + hours + "h " + minutes + "m " + seconds + "s";
 
     return timeLeft;
   }

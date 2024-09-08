@@ -3,6 +3,7 @@ package com.carinaschoppe.playLegendBewerbung.commands;
 import com.carinaschoppe.playLegendBewerbung.database.DatabaseServices;
 import com.carinaschoppe.playLegendBewerbung.messages.Messages;
 import com.carinaschoppe.playLegendBewerbung.utility.Utility;
+import java.util.ArrayList;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -56,7 +57,10 @@ public class PermissionsManagementCommand implements CommandExecutor {
     }
 
     var dbRank = dbSearch.get();
-    dbRank.getPermissions().remove(permissionToRemove);
+    var permissions = new ArrayList<>(dbRank.getPermissions());
+    permissions.remove(permissionToRemove);
+    dbRank.setPermissions(permissions);
+    dbRank.save();
     dbRank.save();
     player.sendMessage(Utility.convertComponent(Messages.INSTANCE.getPermissionRemoved().replace(
         "%permission%", permissionToRemove).replace("%rank%", dbRank.getRankName())));
@@ -75,9 +79,14 @@ public class PermissionsManagementCommand implements CommandExecutor {
     var dbRank = dbSearch.get();
 
     if (dbRank.getPermissions().stream().anyMatch(it -> it.equalsIgnoreCase(permissionToAdd))) {
-      player.sendMessage(Utility.convertComponent(Messages.INSTANCE.getPermissionAlreadyExists()));
+      player.sendMessage(
+          Utility.convertComponent(Messages.INSTANCE.getPermissionAlreadyExists().replace(
+              "%permission%", permissionToAdd).replace("%rank%", dbRank.getRankName())));
     }
-    dbRank.getPermissions().add(permissionToAdd);
+
+    var permissions = new ArrayList<>(dbRank.getPermissions());
+    permissions.add(permissionToAdd);
+    dbRank.setPermissions(permissions);
     dbRank.save();
     player.sendMessage(Utility.convertComponent(Messages.INSTANCE.getPermissionAdded().replace(
         "%permission%", permissionToAdd).replace("%rank%", dbRank.getRankName())));

@@ -42,7 +42,7 @@ public class DatabaseServices {
       io.ebean.config.DatabaseConfig serverConfig = new io.ebean.config.DatabaseConfig();
       serverConfig.setName("db");
       serverConfig.setDdlGenerate(true);  // Generiert die Tabellen-SQL-Anweisungen
-      serverConfig.setDdlCreateOnly(true);
+      serverConfig.setDdlRun(true);
       // Setze die Datenbankverbindung
       DataSourceConfig dataSourceConfig = new DataSourceConfig();
       dataSourceConfig.setUsername(

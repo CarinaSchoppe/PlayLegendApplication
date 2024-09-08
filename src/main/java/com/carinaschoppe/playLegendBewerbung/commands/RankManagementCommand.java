@@ -87,7 +87,6 @@ public class RankManagementCommand implements CommandExecutor {
   }
 
   private void rankSetName(Player player, @NotNull String name, @NotNull String rankname) {
-
     //check if rank exists
     var dbSearch = DatabaseServices.DATABASE_RANK.stream()
         .filter(it -> it.getRankName().equalsIgnoreCase(name)).findFirst();

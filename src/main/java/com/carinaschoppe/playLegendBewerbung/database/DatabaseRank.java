@@ -8,6 +8,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Table;
@@ -24,12 +25,15 @@ import org.bukkit.entity.Player;
 @Table(name = "rank")
 public class DatabaseRank extends Model {
   @Id
+  @GeneratedValue()
+  @Column(name = "rankID", nullable = false, unique = true)
+  private int rankID;
   @Column(name = "rank_name", nullable = false, unique = true)
   private String rankName;
   @Column(name = "prefix")
   private String prefix;
   @ElementCollection(fetch = FetchType.EAGER)
-  @CollectionTable(name = "rank_permissions", joinColumns = @JoinColumn(name = "rank_name"))
+  @CollectionTable(name = "rank_permissions", joinColumns = @JoinColumn(name = "rankID"))
   @Column(name = "permission")
   private List<String> permissions;
   @Column(name = "level", nullable = false)

@@ -19,13 +19,13 @@ public class DatabaseServices {
 
   public static void loadRanks() {
     List<DatabaseRank> databaseRanks =
-        DatabaseServices.getDatabase().find(DatabaseRank.class).findList();
+        database.find(DatabaseRank.class).findList();
     DATABASE_RANK.addAll(databaseRanks);
   }
 
   public static void loadPlayers() {
     List<DatabasePlayer> databasePlayers =
-        DatabaseServices.getDatabase().find(DatabasePlayer.class).findList();
+        database.find(DatabasePlayer.class).findList();
     DATABASE_PLAYERS.addAll(databasePlayers);
   }
 
@@ -38,13 +38,10 @@ public class DatabaseServices {
     try {
       // Setze den Plugin-ClassLoader als den aktuellen ContextClassLoader
       Thread.currentThread().setContextClassLoader(pluginClassLoader);
-
       // Erstelle die Ebean-Datenbank-Konfiguration
       io.ebean.config.DatabaseConfig serverConfig = new io.ebean.config.DatabaseConfig();
       serverConfig.setName("db");
-      serverConfig.loadFromProperties();  // Lädt Konfiguration aus application.yaml oder ebean.properties
       serverConfig.setDdlGenerate(true);  // Generiert die Tabellen-SQL-Anweisungen
-      serverConfig.setDdlRun(true);       // Führe die DDL aus, um die Tabellen zu erstellen
       serverConfig.setDdlCreateOnly(true);
       // Setze die Datenbankverbindung
       DataSourceConfig dataSourceConfig = new DataSourceConfig();
@@ -74,7 +71,6 @@ public class DatabaseServices {
       // Erstelle die Datenbank mit dem Plugin-ClassLoader
       DatabaseFactory.createWithContextClassLoader(serverConfig, pluginClassLoader);
       database = DatabaseFactory.create(serverConfig);
-
 
       // Logge die erfolgreiche Erstellung der Datenbank
       PlayLegendBewerbung.getInstance().getLogger().info("Successfully created database");

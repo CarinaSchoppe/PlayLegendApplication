@@ -26,13 +26,14 @@ public class MessageHandler {
       } catch (Exception e) {
         e.printStackTrace();
       }
-      try {
-        Messages.INSTANCE = gson.fromJson(new FileReader(MESSAGES_FILE), Messages.class);
-      } catch (FileNotFoundException e) {
-        throw new RuntimeException(e);
-      }
-
     }
+    try {
+      Messages.INSTANCE = gson.fromJson(new FileReader(MESSAGES_FILE), Messages.class);
+    } catch (FileNotFoundException e) {
+      throw new RuntimeException(e);
+    }
+
+
     //load the messages from to file
   }
 

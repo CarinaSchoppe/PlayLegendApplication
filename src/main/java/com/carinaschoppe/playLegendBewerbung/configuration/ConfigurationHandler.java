@@ -27,13 +27,14 @@ public class ConfigurationHandler {
       } catch (Exception e) {
         e.printStackTrace();
       }
-      try {
-        Configuration.INSTANCE = gson.fromJson(new FileReader(CONFIG_FILE), Configuration.class);
-      } catch (FileNotFoundException e) {
-        throw new RuntimeException(e);
-      }
-
     }
+    try {
+      Configuration.INSTANCE = gson.fromJson(new FileReader(CONFIG_FILE), Configuration.class);
+    } catch (FileNotFoundException e) {
+      throw new RuntimeException(e);
+    }
+
+
     //load the messages from to file
   }
 

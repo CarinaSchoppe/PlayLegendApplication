@@ -39,7 +39,9 @@ dependencies {
 
     //placehodler API
     //compileOnly 'com.comphenix.protocol:ProtocolLib:5.1.0'
-    compileOnly name: 'individualsigns'
+    fileTree(dir: 'dependentPlugins', include: '*.jar').forEach { file ->
+        compileOnly files(file)
+    }
     //ORM Ebean
     implementation 'io.ebean:ebean-ddl-generator:+'
     implementation 'io.ebean:ebean:15.5.1'

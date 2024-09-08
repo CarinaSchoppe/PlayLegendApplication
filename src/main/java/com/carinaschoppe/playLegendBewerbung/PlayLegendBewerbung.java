@@ -45,7 +45,6 @@ public class PlayLegendBewerbung extends JavaPlugin {
       makeDatabaseFile();
     }
 
-
     DatabaseServices.createDatabase();
     DatabaseServices.loadPlayers();
     DatabaseServices.loadRanks();

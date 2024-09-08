@@ -49,6 +49,7 @@ public class DatabaseRank extends Model {
 
   }
 
+
   /**
    * Holt einen Rank anhand seines Namens aus der Datenbank.
    *
@@ -74,18 +75,17 @@ public class DatabaseRank extends Model {
   /**
    * Gibt alle Permissions des Ranks, sowie alle Permissions der untergeordneten Ranks zurück.
    *
-   * @param databaseRank Der Rank, dessen Permissions abgefragt werden sollen.
    * @return eine Liste aller Permissions des Ranks und der untergeordneten Ranks.
    */
-  public List<String> getAllPermissionsOfRankAndChildren(DatabaseRank databaseRank) {
-    List<String> allPermissions = new ArrayList<>(databaseRank.getPermissions());
+  public List<String> getAllPermissionsOfRankAndChildren() {
+    List<String> allPermissions = new ArrayList<>(getPermissions());
 
     for (DatabaseRank child : getAllRanks()) {
-      if (child.getLevel() < databaseRank.getLevel()) {
+      if (child.getLevel() < getLevel()) {
         allPermissions.addAll(child.getPermissions());
       }
     }
-    allPermissions.addAll(databaseRank.getPermissions());
+    allPermissions.addAll(getPermissions());
     return allPermissions;
   }
 

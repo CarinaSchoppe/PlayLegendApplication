@@ -15,7 +15,9 @@ public class Messages {
   private String playerNotOnline = "Der angegebene Spieler ist nicht online";
   private String playerNotFound =
       "Es konnte kein Spieler mit diesem Namen gefunden werden.";
-  private String notEnoughArguments = "Es fehlen Argumente bei diesem Befehl.";
+  private String notEnoughArguments = "Es fehlen Argumente oder die Argumente sind ungültig bei " +
+      "diesem" +
+      " Befehl.";
   private String lackOfPermission =
       "Du hast nicht genug Rechte um diesen Befehl auszufeuhren.";
   private String addedRank = "Der Rang %rank% wurde erstellt.";
@@ -29,10 +31,10 @@ public class Messages {
   private String permanentTimeOther =
       "Der Rank %rank% von %player% ist permanent";
   private String remainingTime =
-      "Es verbleiben noch %days% Tage, %hours% Stunden, %min% Minuten und %sec% für " +
+      "Es verbleiben noch %time% für " +
           "deinen Rank %rank% Sekunden.";
   private String remainingTimeOther =
-      "Es verbleiben noch %days% Tage, %hours% Stunden, %min% Minuten und %sec% Sekunden im Rank " +
+      "Es verbleiben noch %time% im Rank " +
           "%rank%" +
           " für den" +
           " Spieler: %player%";
@@ -46,6 +48,5 @@ public class Messages {
       "Herzlichen Glückwunsch zum neuen Rang %rank%!";
   private String noPlayer =
       "Du musst ein Spieler für diesen Befehl sein.";
-
 
 }

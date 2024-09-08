@@ -63,7 +63,7 @@ public class RankHandler extends PermissibleBase {
     var db = DatabaseServices.DATABASE_PLAYERS.stream()
         .filter(dbPlayer -> dbPlayer.getUuid().equals(player.getUniqueId())).findFirst().get();
 
-    var permissions = db.getDatabaseRank().getPermissions();
+    var permissions = db.getDatabaseRank().getAllPermissionsOfRankAndChildren();
 
     if (permissions.contains("-" + inName)) {
       return false;

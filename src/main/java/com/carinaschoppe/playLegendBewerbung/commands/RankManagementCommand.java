@@ -46,7 +46,7 @@ public class RankManagementCommand implements CommandExecutor {
 
   private void rankType(@NotNull CommandSender sender, @NotNull String @NotNull [] args,
                         Player player) {
-    if (args[0].equalsIgnoreCase("delete")) {
+    if (args[0].equalsIgnoreCase("delete") || args[0].equalsIgnoreCase("remove")) {
       rankDelete(player, args[1]);
     } else if (args[0].equalsIgnoreCase("add")) {
       rankAdd(player, args[1]);

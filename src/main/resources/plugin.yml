@@ -8,25 +8,25 @@ author: [ Carina Sophie Schoppe (LazarusDE) ]
 depend: [ InSigns ]
 commands:
   rank:
-    description: 'Handled das Management von ranks'
+    description: 'Handled das Management von ranks' Verwendung: rank add / delete / remove / setlevel / setprefix /setname rank value
     aliases:
       - rank
       - ranks
   playergroup:
-    description: 'Handled das Management von playergroups'
+    description: 'Handled das Management von playergroups' Nutzung: playergroup playername rankname (optional) timestamp XdXhXmXs (optional)
     aliases:
       - playergroup
       - playergroups
       - pg
   permission:
-    description: 'Handled das Management von permissions'
+    description: 'Handled das Management von permissions' Verwendung: permission rank add / remove permission
     aliases:
       - permission
       - permissions
       - perm
       - perms
   time:
-    description: 'Tells the player the time he or others got on that rank'
+    description: 'Tells the player the time he or others got on that rank' Verwendung: time (optional) playername (optional)
     aliases:
       - time
       - t

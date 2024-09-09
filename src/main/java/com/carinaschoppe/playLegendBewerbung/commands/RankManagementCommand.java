@@ -184,7 +184,8 @@ public class RankManagementCommand implements CommandExecutor {
 
     player.sendMessage(Utility.convertComponent(
         Messages.INSTANCE.getRemovedRank().replace("%rank%", dbRank.getRankName())));
-    dbRank.delete();
+    Bukkit.getScheduler()
+        .runTaskAsynchronously(PlayLegendBewerbung.getInstance(), () -> dbRank.delete());
     DatabaseServices.DATABASE_RANK.remove(dbRank);
 
   }

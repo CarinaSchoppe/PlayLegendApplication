@@ -13,6 +13,7 @@ public class SignRelatedEvents implements Listener {
   /**
    * This event is called when a player right clicks a sign.
    * It's used to display the current players name, rank and prefix on the sign.
+   * Source of this code -> https://github.com/blablubbabc/IndividualSigns
    */
   @EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)
   public void onSignChange(SignSendEvent event) {

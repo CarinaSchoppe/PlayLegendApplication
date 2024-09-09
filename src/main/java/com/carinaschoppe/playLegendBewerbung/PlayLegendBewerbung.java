@@ -30,10 +30,33 @@ public class PlayLegendBewerbung extends JavaPlugin {
   private static PlayLegendBewerbung instance;
 
 
+  /**
+   * Called when the plugin is enabled.
+   *
+   * <p>This is called when the plugin is enabled, either by the server administrator or by the
+   * plugin itself. This is a good place to put code to initialize any resources that the plugin
+   * needs to do its job.
+   *
+   * <p>In this plugin, the following actions are performed:
+   * <ul>
+   *   <li>The plugin folder is created if it does not exist.</li>
+   *   <li>The database is created.</li>
+   *   <li>The players and ranks are loaded from the database.</li>
+   *   <li>The default ranks are loaded.</li>
+   *   <li>The {@link #initialize(PluginManager)} method is called to initialize the plugin.
+   * </ul>
+   */
   @Override
   public void onEnable() {
     // Plugin startup logic
     instance = this;
+
+    Bukkit.getScheduler().runTaskAsynchronously(this, this::fileLoading);
+    initialize(Bukkit.getPluginManager());
+  }
+
+
+  private void fileLoading() {
     var pluginsFolder = new File(Bukkit.getServer().getPluginsFolder(), "/PlayLegend");
     var databaseFile = new File(pluginsFolder, "database.db");
     FileHandler.makePluginFolder(pluginsFolder);
@@ -41,22 +64,20 @@ public class PlayLegendBewerbung extends JavaPlugin {
     if (Configuration.INSTANCE.getType().equalsIgnoreCase("sqlite")) {
       FileHandler.makeDatabaseFile(databaseFile);
     }
-
     DatabaseServices.createDatabase(databaseFile);
-
     DatabaseServices.loadPlayers();
     DatabaseServices.loadRanks();
     DefaultRankGeneration.loadDefaultRanks();
 
-    initialize(Bukkit.getPluginManager());
   }
 
 
-
-
-
+  /**
+   * Initializes the plugin and registers all events, commands, and listeners if InSigns is enabled.
+   *
+   * @param pluginManager the plugin manager
+   */
   private void initialize(@NotNull PluginManager pluginManager) {
-
 
     Plugin insignsPlugin = getServer().getPluginManager().getPlugin("InSigns");
     if ((insignsPlugin != null) && insignsPlugin.isEnabled()) {
@@ -82,6 +103,19 @@ public class PlayLegendBewerbung extends JavaPlugin {
   }
 
 
+  /**
+   * Called when the plugin is disabled.
+   *
+   * <p>This is called when the plugin is disabled, either by the server administrator or by the
+   * plugin itself. This is a good place to put code to clean up any resources that the plugin
+   * created or to cancel any tasks that were started when the plugin was enabled.
+   *
+   * <p>The plugin will not be able to perform any tasks after this method is called, so it
+   * should be used to clean up and resources that the plugin created or to cancel any tasks that
+   * were started when the plugin was enabled.
+   *
+   * @see org.bukkit.plugin.Plugin#onDisable()
+   */
   @Override
   public void onDisable() {
 

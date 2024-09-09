@@ -11,9 +11,7 @@ public class PlayerChatEvent implements Listener {
 
   @EventHandler(ignoreCancelled = true)
   public void onAsyncChat(AsyncChatEvent event) {
-
     event.setCancelled(true);
-
     var player = event.getPlayer();
     var rank = DatabaseRank.getPlayerRank(player);
     if (rank == null) {

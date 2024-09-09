@@ -22,7 +22,8 @@ public class PlayerLoginEvent implements Listener {
                       .findFirst().get()));
 
       databasePlayer.setName(event.getPlayer().getName());
-      databasePlayer.save();
+      Bukkit.getScheduler().runTaskAsynchronously(PlayLegendBewerbung.getInstance(),
+          () -> databasePlayer.save());
       DatabaseServices.DATABASE_PLAYERS.add(databasePlayer);
     });
     RankHandler.updatePlayerPermissions(event.getPlayer());

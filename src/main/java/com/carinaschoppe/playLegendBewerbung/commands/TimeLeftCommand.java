@@ -5,8 +5,6 @@ import com.carinaschoppe.playLegendBewerbung.database.DatabaseRank;
 import com.carinaschoppe.playLegendBewerbung.database.DatabaseServices;
 import com.carinaschoppe.playLegendBewerbung.messages.Messages;
 import com.carinaschoppe.playLegendBewerbung.utility.Utility;
-import java.time.Duration;
-import java.time.LocalDateTime;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -62,7 +60,7 @@ public class TimeLeftCommand implements CommandExecutor {
   private void otherPlayerMesssage(DatabasePlayer dbPlayerSearch, Player player) {
     if (!dbPlayerSearch.isPermanent()) {
       player.sendMessage(Utility.convertComponent(Messages.INSTANCE.getRemainingTimeOther().replace(
-              "%time%", calculateTimeLeft(dbPlayerSearch))
+              "%time%", Utility.calculateTimeLeft(dbPlayerSearch))
           .replace("%rank%", DatabaseRank.getPlayerRank(player).getRankName()).replace("%player%"
               , dbPlayerSearch.getName())));
     } else {
@@ -76,7 +74,7 @@ public class TimeLeftCommand implements CommandExecutor {
   private void ownPlayerTimeLeft(DatabasePlayer dbPlayer, Player player) {
     if (!dbPlayer.isPermanent()) {
       player.sendMessage(Utility.convertComponent(Messages.INSTANCE.getRemainingTime().replace(
-              "%time%", calculateTimeLeft(dbPlayer))
+              "%time%", Utility.calculateTimeLeft(dbPlayer))
           .replace("%rank%", DatabaseRank.getPlayerRank(player).getRankName())));
 
     } else {
@@ -87,30 +85,7 @@ public class TimeLeftCommand implements CommandExecutor {
   }
 
 
-  private String calculateTimeLeft(DatabasePlayer dbPlayer) {
-    LocalDateTime expiryTime = dbPlayer.getRankExpiry();
-    LocalDateTime now = LocalDateTime.now();
 
-    // Berechne die Dauer zwischen jetzt und dem Ablaufzeitpunkt
-    Duration duration = Duration.between(now, expiryTime);
-
-    // Extrahiere die verbleibenden Tage, Stunden, Minuten und Sekunden
-    long days = duration.toDays();
-    duration = duration.minusDays(days);
-
-    long hours = duration.toHours();
-    duration = duration.minusHours(hours);
-
-    long minutes = duration.toMinutes();
-    duration = duration.minusMinutes(minutes);
-
-    long seconds = duration.getSeconds();
-
-    // Erstelle einen String mit der verbleibenden Zeit
-    String timeLeft = days + "d " + hours + "h " + minutes + "m " + seconds + "s";
-
-    return timeLeft;
-  }
 
 
 }

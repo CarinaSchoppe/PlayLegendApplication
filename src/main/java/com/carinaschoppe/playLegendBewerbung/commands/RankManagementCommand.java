@@ -1,10 +1,12 @@
 package com.carinaschoppe.playLegendBewerbung.commands;
 
+import com.carinaschoppe.playLegendBewerbung.PlayLegendBewerbung;
 import com.carinaschoppe.playLegendBewerbung.database.DatabaseRank;
 import com.carinaschoppe.playLegendBewerbung.database.DatabaseServices;
 import com.carinaschoppe.playLegendBewerbung.messages.Messages;
 import com.carinaschoppe.playLegendBewerbung.utility.Utility;
 import java.util.List;
+import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -81,7 +83,8 @@ public class RankManagementCommand implements CommandExecutor {
     }
     var dbRank = dbSearch.get();
     dbRank.setPrefix(prefix);
-    dbRank.save();
+    Bukkit.getScheduler().runTaskAsynchronously(PlayLegendBewerbung.getInstance(),
+        () -> dbRank.save());
     player.sendMessage(Utility.convertComponent(Messages.INSTANCE.getPrefixChanged().replace(
         "%prefix%", dbRank.getPrefix()).replace("%rank%", dbRank.getRankName())));
   }
@@ -97,7 +100,8 @@ public class RankManagementCommand implements CommandExecutor {
     }
     var dbRank = dbSearch.get();
     dbRank.setRankName(rankname);
-    dbRank.save();
+    Bukkit.getScheduler().runTaskAsynchronously(PlayLegendBewerbung.getInstance(),
+        () -> dbRank.save());
     player.sendMessage(Utility.convertComponent(Messages.INSTANCE.getRankNameChanged().replace(
         "%name%", dbRank.getRankName())));
 
@@ -138,7 +142,8 @@ public class RankManagementCommand implements CommandExecutor {
     }
 
     dbRank.setLevel(lvl);
-    dbRank.save();
+    Bukkit.getScheduler().runTaskAsynchronously(PlayLegendBewerbung.getInstance(),
+        () -> dbRank.save());
     player.sendMessage(Utility.convertComponent(Messages.INSTANCE.getRankLevelChanged().replace(
         "%rank%", dbRank.getRankName()).replace("%level%", String.valueOf(dbRank.getLevel()))));
   }
@@ -154,7 +159,8 @@ public class RankManagementCommand implements CommandExecutor {
     }
     var newRank = new DatabaseRank().setRankName(name).setLevel(0).setPermissions(List.of())
         .setPrefix("PLACEHOLDER");
-    newRank.save();
+    Bukkit.getScheduler().runTaskAsynchronously(PlayLegendBewerbung.getInstance(),
+        () -> newRank.save());
     DatabaseServices.DATABASE_RANK.add(newRank);
 
     player.sendMessage(Utility.convertComponent(

@@ -14,6 +14,12 @@ public class MessageHandler {
   public static File MESSAGES_FILE;
 
 
+  /**
+   * Loads the messages from the messages.json file in the given plugins folder.
+   * If the file does not exist, it will be created and the default messages will be written to it.
+   *
+   * @param pluginsFolder the folder where the messages.json file should be located
+   */
   public static void load(File pluginsFolder) {
     var gson = new Gson();
     MESSAGES_FILE = new File(pluginsFolder, "messages.json");
@@ -32,11 +38,13 @@ public class MessageHandler {
     } catch (FileNotFoundException e) {
       throw new RuntimeException(e);
     }
-
-
-    //load the messages from to file
   }
 
+  /**
+   * Saves the messages to the messages.json file in the given plugins folder.
+   * If the Messages instance is null, a new one will be created with the default messages.
+   * This method will throw a RuntimeException if the file cannot be written for any reason.
+   */
   private static void save() {
     if (Messages.INSTANCE == null) {
       Messages.INSTANCE = new Messages();

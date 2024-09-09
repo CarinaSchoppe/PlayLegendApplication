@@ -1,5 +1,6 @@
 package com.carinaschoppe.playLegendBewerbung.commands;
 
+import com.carinaschoppe.playLegendBewerbung.PlayLegendBewerbung;
 import com.carinaschoppe.playLegendBewerbung.database.DatabasePlayer;
 import com.carinaschoppe.playLegendBewerbung.database.DatabaseRank;
 import com.carinaschoppe.playLegendBewerbung.database.DatabaseServices;
@@ -16,8 +17,9 @@ import org.jetbrains.annotations.NotNull;
 
 public class PlayerRankManagementCommand implements CommandExecutor {
 
-  private static void sendMessagesAndUpdateCommands(Player player, DatabaseRank dbRank,
-                                                    DatabasePlayer dbPlayer) {
+  private static void sendMessagesAndUpdateCommandsForRankManagementCommand(Player player,
+                                                                            DatabaseRank dbRank,
+                                                                            DatabasePlayer dbPlayer) {
     var onlinePlayer = Bukkit.getPlayer(player.getUniqueId());
 
     RankHandler.updatePlayerPermissions(onlinePlayer);
@@ -112,10 +114,11 @@ public class PlayerRankManagementCommand implements CommandExecutor {
     dbPlayer.setDatabaseRank(dbRank);
     dbPlayer.setRankExpiry(dateTime);
     dbPlayer.setPermanent(false);
-    dbPlayer.save();
+    Bukkit.getScheduler().runTaskAsynchronously(PlayLegendBewerbung.getInstance(),
+        () -> dbRank.save());
 
 
-    sendMessagesAndUpdateCommands(player, dbRank, dbPlayer);
+    sendMessagesAndUpdateCommandsForRankManagementCommand(player, dbRank, dbPlayer);
 
 
   }
@@ -146,9 +149,10 @@ public class PlayerRankManagementCommand implements CommandExecutor {
 
     dbPlayer.setDatabaseRank(dbRank);
     dbPlayer.setPermanent(true);
-    dbPlayer.save();
+    Bukkit.getScheduler().runTaskAsynchronously(PlayLegendBewerbung.getInstance(),
+        () -> dbRank.save());
 
-    sendMessagesAndUpdateCommands(player, dbRank, dbPlayer);
+    sendMessagesAndUpdateCommandsForRankManagementCommand(player, dbRank, dbPlayer);
 
 
   }

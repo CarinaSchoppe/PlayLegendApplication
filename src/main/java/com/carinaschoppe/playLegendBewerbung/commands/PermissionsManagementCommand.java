@@ -1,5 +1,6 @@
 package com.carinaschoppe.playLegendBewerbung.commands;
 
+import com.carinaschoppe.playLegendBewerbung.PlayLegendBewerbung;
 import com.carinaschoppe.playLegendBewerbung.database.DatabaseServices;
 import com.carinaschoppe.playLegendBewerbung.messages.Messages;
 import com.carinaschoppe.playLegendBewerbung.ranklogic.RankHandler;
@@ -63,8 +64,8 @@ public class PermissionsManagementCommand implements CommandExecutor {
     var permissions = new ArrayList<>(dbRank.getPermissions());
     permissions.remove(permissionToRemove);
     dbRank.setPermissions(permissions);
-    dbRank.save();
-
+    Bukkit.getScheduler().runTaskAsynchronously(PlayLegendBewerbung.getInstance(),
+        () -> dbRank.save());
 
     Bukkit.getOnlinePlayers().forEach(RankHandler::updatePlayerPermissions);
 
@@ -94,7 +95,8 @@ public class PermissionsManagementCommand implements CommandExecutor {
 
     permissions.add(permissionToAdd);
     dbRank.setPermissions(permissions);
-    dbRank.save();
+    Bukkit.getScheduler().runTaskAsynchronously(PlayLegendBewerbung.getInstance(),
+        () -> dbRank.save());
     Bukkit.getOnlinePlayers().forEach(RankHandler::updatePlayerPermissions);
 
     player.sendMessage(Utility.convertComponent(Messages.INSTANCE.getPermissionAdded().replace(

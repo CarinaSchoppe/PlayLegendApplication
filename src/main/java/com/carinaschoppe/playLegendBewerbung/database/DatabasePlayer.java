@@ -16,49 +16,46 @@ import lombok.Getter;
 @Table(name = "players")
 @Getter
 public class DatabasePlayer extends Model {
-    @Id
-    @Column(name = "uuid", unique = true, nullable = false)
-    private UUID uuid;
+  @Id
+  @Column(name = "uuid", unique = true, nullable = false)
+  private UUID uuid;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "rank_name")
-    private DatabaseRank databaseRank;
+  @ManyToOne(fetch = FetchType.EAGER)
+  @JoinColumn(name = "rank_name")
+  private DatabaseRank databaseRank;
+  @Column(name = "rank_expiry")
+  private LocalDateTime rankExpiry;
+  @Column(name = "name")
+  private String name;
+  @Column(name = "permanent", nullable = false)
+  private boolean permanent;
 
-    public static void init() {
-    }
-    @Column(name = "rank_expiry")
-    private LocalDateTime rankExpiry;
+  public static void init() {
+  }
 
-    @Column(name = "name")
-    private String name;
+  public DatabasePlayer setUuid(UUID uuid) {
+    this.uuid = uuid;
+    return this;
+  }
 
-    @Column(name = "permanent", nullable = false)
-    private boolean permanent;
+  public DatabasePlayer setDatabaseRank(DatabaseRank databaseRank) {
+    this.databaseRank = databaseRank;
+    return this;
+  }
 
+  public DatabasePlayer setRankExpiry(LocalDateTime rankExpiry) {
+    this.rankExpiry = rankExpiry;
+    return this;
+  }
 
-    public DatabasePlayer setUuid(UUID uuid) {
-        this.uuid = uuid;
-        return this;
-    }
+  public DatabasePlayer setName(String name) {
+    this.name = name;
+    return this;
+  }
 
-    public DatabasePlayer setDatabaseRank(DatabaseRank databaseRank) {
-        this.databaseRank = databaseRank;
-        return this;
-    }
-
-    public DatabasePlayer setRankExpiry(LocalDateTime rankExpiry) {
-        this.rankExpiry = rankExpiry;
-        return this;
-    }
-
-    public DatabasePlayer setName(String name) {
-        this.name = name;
-        return this;
-    }
-
-    public DatabasePlayer setPermanent(boolean permanent) {
-        this.permanent = permanent;
-        return this;
-    }
+  public DatabasePlayer setPermanent(boolean permanent) {
+    this.permanent = permanent;
+    return this;
+  }
 
 }

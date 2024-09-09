@@ -21,6 +21,12 @@ public class RankHandler extends PermissibleBase {
     this.player = player;
   }
 
+  /**
+   * Updates the permissions of a given player by setting the Permissible object
+   * of the CraftHumanEntity to a new instance of RankHandler.
+   *
+   * @param player The player to update the permissions for.
+   */
   public static void updatePlayerPermissions(Player player) {
     try {
       player.hasPermission("");
@@ -34,9 +40,14 @@ public class RankHandler extends PermissibleBase {
     }
   }
 
+  /**
+   * A task that runs every 20 ticks and checks if a player's rank has expired. If it has, the
+   * player is set to the default rank and the permanent flag is set to true. If the player is online,
+   * a message is sent to the player.
+   */
   public static void playerRankRemover() {
 
-    Bukkit.getScheduler().runTaskTimerAsynchronously(PlayLegendBewerbung.getInstance(), () -> {
+    Bukkit.getScheduler().runTaskTimer(PlayLegendBewerbung.getInstance(), () -> {
       //go through all players in the database and check if they have expired then set them to
       // default group
       for (var dbPlayer : DatabaseServices.DATABASE_PLAYERS) {
@@ -46,7 +57,8 @@ public class RankHandler extends PermissibleBase {
               DatabaseServices.DATABASE_RANK.stream().filter(rank -> rank.getLevel() == 0)
                   .findFirst().get());
           dbPlayer.setPermanent(true);
-          dbPlayer.save();
+          Bukkit.getScheduler().runTaskAsynchronously(PlayLegendBewerbung.getInstance(),
+              () -> dbPlayer.save());
           var player = Bukkit.getPlayer(dbPlayer.getUuid());
           if (player != null && player.isOnline()) {
             player.sendMessage(Utility.convertComponent(
@@ -55,6 +67,14 @@ public class RankHandler extends PermissibleBase {
           }
         }
       }
+      /**
+       * Checks if the player represented by this RankHandler has the given
+       * permission. This method takes into account the player's rank and
+       * whether the player is an operator or not.
+       *
+       * @param inName The name of the permission to check.
+       * @return True if the player has the given permission, false otherwise.
+       */
     }, 20, 20);
 
   }

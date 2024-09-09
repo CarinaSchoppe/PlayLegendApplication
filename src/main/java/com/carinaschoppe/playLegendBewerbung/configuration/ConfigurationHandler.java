@@ -15,6 +15,12 @@ public class ConfigurationHandler {
   private static File CONFIG_FILE;
 
 
+  /**
+   * Loads the configuration from the configuration.json file in the given plugins folder.
+   * If the file does not exist, it will be created and the default configuration will be written to it.
+   *
+   * @param pluginsFolder the folder where the configuration.json file should be located
+   */
   public static void load(File pluginsFolder) {
     CONFIG_FILE = new File(pluginsFolder, "configuration.json");
     var gson = new Gson();
@@ -38,6 +44,11 @@ public class ConfigurationHandler {
     //load the messages from to file
   }
 
+  /**
+   * Saves the configuration to the configuration.json file in the given plugins folder.
+   * If the configuration instance is null, a new one will be created with the default configuration.
+   * This method will throw a RuntimeException if the file cannot be written for any reason.
+   */
   private static void save() {
     if (Configuration.INSTANCE == null) {
       Configuration.INSTANCE = new Configuration();

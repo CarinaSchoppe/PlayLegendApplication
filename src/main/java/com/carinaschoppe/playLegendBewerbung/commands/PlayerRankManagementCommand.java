@@ -105,22 +105,26 @@ public class PlayerRankManagementCommand implements CommandExecutor {
 
     var dbPlayer = dbPlayerSearch.get();
     var dbRank = dbRankSearch.get();
+    Result result = new Result(dbPlayer, dbRank);
 
-    if (dbRank.getRankName().equalsIgnoreCase("default")) {
+    if (result.dbRank().getRankName().equalsIgnoreCase("default")) {
       player.sendMessage(Utility.convertComponent(Messages.INSTANCE.getArgumentsNotCorrect()));
       return;
     }
 
-    dbPlayer.setDatabaseRank(dbRank);
-    dbPlayer.setRankExpiry(dateTime);
-    dbPlayer.setPermanent(false);
+    result.dbPlayer().setDatabaseRank(result.dbRank());
+    result.dbPlayer().setRankExpiry(dateTime);
+    result.dbPlayer().setPermanent(false);
     Bukkit.getScheduler().runTaskAsynchronously(PlayLegendBewerbung.getInstance(),
-        () -> dbRank.save());
+        () -> result.dbRank().save());
+
+    sendMessagesAndUpdateCommandsForRankManagementCommand(player, result.dbRank(),
+        result.dbPlayer());
 
 
-    sendMessagesAndUpdateCommandsForRankManagementCommand(player, dbRank, dbPlayer);
+  }
 
-
+  private record Result(DatabasePlayer dbPlayer, DatabaseRank dbRank) {
   }
 
   private void playerGroupSetPermanently(Player player, @NotNull String playerName,
@@ -145,7 +149,6 @@ public class PlayerRankManagementCommand implements CommandExecutor {
 
     var dbPlayer = dbPlayerSearch.get();
     var dbRank = dbRankSearch.get();
-
 
     dbPlayer.setDatabaseRank(dbRank);
     dbPlayer.setPermanent(true);

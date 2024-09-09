@@ -10,9 +10,7 @@ import java.io.IOException;
 
 public class MessageHandler {
 
-
   public static File MESSAGES_FILE;
-
 
   /**
    * Loads the messages from the messages.json file in the given plugins folder.

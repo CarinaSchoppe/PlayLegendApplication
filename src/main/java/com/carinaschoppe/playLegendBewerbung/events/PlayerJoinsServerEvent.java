@@ -16,7 +16,6 @@ public class PlayerJoinsServerEvent implements Listener {
     event.joinMessage(Utility.convertComponent(
         "[" + name + "]" + " " + player.getName() + " hat das Spiel " + "betreten!"));
     //generate dao player
-
   }
 
 }

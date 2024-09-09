@@ -59,6 +59,7 @@ public class RankHandler extends PermissibleBase {
           dbPlayer.setPermanent(true);
           Bukkit.getScheduler().runTaskAsynchronously(PlayLegendBewerbung.getInstance(),
               () -> dbPlayer.save());
+
           var player = Bukkit.getPlayer(dbPlayer.getUuid());
           if (player != null && player.isOnline()) {
             player.sendMessage(Utility.convertComponent(

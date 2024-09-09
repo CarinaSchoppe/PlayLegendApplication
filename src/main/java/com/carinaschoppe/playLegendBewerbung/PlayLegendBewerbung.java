@@ -25,7 +25,6 @@ import org.jetbrains.annotations.NotNull;
 @Getter
 public class PlayLegendBewerbung extends JavaPlugin {
 
-
   @Getter
   private static PlayLegendBewerbung instance;
 
@@ -50,7 +49,6 @@ public class PlayLegendBewerbung extends JavaPlugin {
   public void onEnable() {
     // Plugin startup logic
     instance = this;
-
     Bukkit.getScheduler().runTaskAsynchronously(this, this::fileLoading);
     initialize(Bukkit.getPluginManager());
   }
@@ -96,8 +94,6 @@ public class PlayLegendBewerbung extends JavaPlugin {
           .setExecutor(new PlayerRankManagementCommand());
       Objects.requireNonNull(this.getCommand("permission"))
           .setExecutor(new PermissionsManagementCommand());
-
-
       getLogger().info("Plugin aktiviert und mit MySQL-Datenbank verbunden!");
     }
   }
@@ -118,7 +114,6 @@ public class PlayLegendBewerbung extends JavaPlugin {
    */
   @Override
   public void onDisable() {
-
     getLogger().info("Plugin deaktiviert.");   // Plugin shutdown logic
   }
 

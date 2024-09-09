@@ -21,8 +21,6 @@ public class PlayerChatEvent implements Listener {
     Bukkit.broadcast(
         Utility.convertComponent("[" + name + "]" + " " + player.getName() + ": ")
             .append(event.message()));
-
-
   }
 
 }

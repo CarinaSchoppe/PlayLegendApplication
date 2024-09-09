@@ -39,8 +39,6 @@ public class ConfigurationHandler {
     } catch (FileNotFoundException e) {
       throw new RuntimeException(e);
     }
-
-
     //load the messages from to file
   }
 

@@ -31,7 +31,6 @@ public class Messages {
   private String removedRank = "Der Rang %rank% wurde geloescht.";
   private String addedPlayerToRank =
       "Dem Spieler %player% wurde der Rang %rank% verliehen.";
-
   private String permanentTime =
       "Dein Rank %rank% ist permanent";
   private String permanentTimeOther =
@@ -39,7 +38,6 @@ public class Messages {
   private String remainingTime =
       "Es verbleiben noch %time% für " +
           "deinen Rank %rank% Sekunden.";
-
   private String timestampNotCorrect =
       "Das Zeitstempel-Format muss XdXhXmXs sein.";
   private String remainingTimeOther =
@@ -53,7 +51,6 @@ public class Messages {
       "Das Level vom Rang: %rank% ist nun: %level%";
   private String rankNameChanged =
       "Der Name ist nun: %name%";
-
   private String addPermissionToRank =
       "Die Permission %permission% wurde dem Rang %rank% hinzugefeugt.";
   private String newRankReceived =

@@ -16,6 +16,7 @@ public class DatabaseServices {
 
   public static final Set<DatabasePlayer> DATABASE_PLAYERS = new HashSet<>();
   public static final Set<DatabaseRank> DATABASE_RANK = new HashSet<>();
+
   @Getter
   @Setter
   private static Database database;
@@ -38,7 +39,6 @@ public class DatabaseServices {
     // Speichern des ursprünglichen ClassLoaders
     ClassLoader originalClassLoader = Thread.currentThread().getContextClassLoader();
     ClassLoader pluginClassLoader = PlayLegendBewerbung.class.getClassLoader();
-
     try {
       // Setze den Plugin-ClassLoader als den aktuellen ContextClassLoader
       Thread.currentThread().setContextClassLoader(pluginClassLoader);

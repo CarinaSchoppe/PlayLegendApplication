@@ -18,5 +18,4 @@ public class Configuration {
   private String type = "sqlite";
 
 
-
 }
